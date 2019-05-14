@@ -1,5 +1,6 @@
 package com.fsi.healthrotine;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 
 import java.sql.Date;
@@ -24,6 +26,8 @@ public class AddActivity extends AppCompatActivity {
     private Integer[] yearsArray = new Integer[200];
     private Integer[] hoursArray = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     private Integer[] minutesArray = new Integer[61];
+
+    DataBase db = new DataBase(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +124,18 @@ public class AddActivity extends AppCompatActivity {
                     buttonCreate.setVisibility(View.VISIBLE);
 
                 } else {
-                    textViewSpecialy.setVisibility(View.INVISIBLE);
-                    spinnerSpecialty.setVisibility(View.INVISIBLE);
+                    textViewSpecialy.setVisibility(View.GONE);
+                    spinnerSpecialty.setVisibility(View.GONE);
+                    textViewDate.setVisibility(View.GONE);
+                    spinnerDay.setVisibility(View.GONE);
+                    spinnerMonth.setVisibility(View.GONE);
+                    spinnerYear.setVisibility(View.GONE);
+                    textViewHour.setVisibility(View.GONE);
+                    spinnerHour.setVisibility(View.GONE);
+                    spinnerMinute.setVisibility(View.GONE);
+                    textViewComment.setVisibility(View.GONE);
+                    editTextComment.setVisibility(View.GONE);
+                    buttonCreate.setVisibility(View.GONE);
                 }
 
 
@@ -152,10 +166,25 @@ public class AddActivity extends AppCompatActivity {
 
                 medicalAppointment.comments = editTextComment.getText().toString();
 
+                db.addMedicalAppointment(medicalAppointment);
+
                 Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                
+
+                goToMainPage();
+
             }
         });
+    }
+
+    public void goToMainPage(){
+        new android.os.Handler().postDelayed(
+            new Runnable() {
+                public void run() {
+                    Intent intent = new Intent(AddActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            },
+            1000);
     }
 }

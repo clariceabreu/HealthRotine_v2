@@ -153,18 +153,18 @@ public class AddActivity extends AppCompatActivity {
                 MedicalAppointment medicalAppointment = new MedicalAppointment();
 
                 String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
-                medicalAppointment.specialty = specialty;
+                medicalAppointment.setSpecialty(specialty);
 
                 int day = daysArray[spinnerDay.getSelectedItemPosition()];
                 int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
                 int year = yearsArray[spinnerYear.getSelectedItemPosition()];
-                medicalAppointment.date = new Date(year - 1900, month - 1, day); //no ano tá -1900 e no mês tá -1 pq é assim por padrão da classe
+                medicalAppointment.setDate(new Date(year - 1900, month - 1, day)); //no ano tá -1900 e no mês tá -1 pq é assim por padrão da classe
 
                 int hour = hoursArray[spinnerHour.getSelectedItemPosition()];
                 int minutes = minutesArray[spinnerMinute.getSelectedItemPosition()];
-                medicalAppointment.time = new Time(hour, minutes, 0);
+                medicalAppointment.setTime(new Time(hour, minutes, 0));
 
-                medicalAppointment.comments = editTextComment.getText().toString();
+                medicalAppointment.setComments(editTextComment.getText().toString());
 
                 db.addMedicalAppointment(medicalAppointment);
 

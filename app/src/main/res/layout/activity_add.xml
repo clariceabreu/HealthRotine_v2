@@ -19,12 +19,14 @@
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:text="Tipo"
+            android:textColor="@android:color/black"
             android:textSize="17dp" />
 
         <Spinner
             android:id="@+id/spinnerType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/custom_border_spinner"
             android:layout_marginTop="10dp" />
 
         <TextView
@@ -34,6 +36,7 @@
             android:layout_marginTop="20dp"
             android:text="Especialidade"
             android:textSize="17dp"
+            android:textColor="@android:color/black"
             tools:visibility="gone" />
 
         <Spinner
@@ -41,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/custom_border_spinner"
             tools:visibility="gone" />
 
         <TextView
@@ -50,6 +54,7 @@
             android:layout_marginTop="20dp"
             android:text="Data"
             android:textSize="17dp"
+            android:textColor="@android:color/black"
             tools:visibility="gone" />
 
         <LinearLayout
@@ -60,25 +65,25 @@
 
             <Spinner
                 android:id="@+id/spinnerDay"
-                android:layout_width="80dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_border_spinner"
                 tools:visibility="gone" />
 
             <Spinner
                 android:id="@+id/spinnerMonth"
-                android:layout_width="80dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_border_spinner"
                 tools:visibility="gone" />
 
             <Spinner
                 android:id="@+id/spinnerYear"
-                android:layout_width="140dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_border_spinner"
                 tools:visibility="gone" />
 
         </LinearLayout>
@@ -90,6 +95,7 @@
             android:layout_marginTop="20dp"
             android:text="Hora"
             android:textSize="17dp"
+            android:textColor="@android:color/black"
             tools:visibility="gone" />
 
         <LinearLayout
@@ -101,17 +107,17 @@
 
             <Spinner
                 android:id="@+id/spinnerHour"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_border_spinner"
                 tools:visibility="gone" />
 
             <Spinner
                 android:id="@+id/spinnerMinute"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_border_spinner"
                 tools:visibility="gone" />
 
         </LinearLayout>
@@ -124,6 +130,7 @@
             android:layout_weight="1"
             android:text="Cometário"
             android:textSize="17dp"
+            android:textColor="@android:color/black"
             android:visibility="gone" />
 
         <EditText
@@ -132,7 +139,11 @@
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:lines="5"
+            android:gravity="top|left"
+            android:maxLines="10"
+            android:inputType="textMultiLine"
+            android:background="@drawable/custom_border_textedit"
             tools:visibility="gone" />
 
         <Button

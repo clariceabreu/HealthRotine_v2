@@ -17,13 +17,14 @@ import com.fsi.healthrotine.Models.MedicalAppointment;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
     private String[] typesArray = new String[]{"Selecione", "Consulta", "Exame", "Remédio"};
     private String[] specialtiesArray = new String[]{"Selecione","Clínica Médica", "Oftomologia", "Otorrinologia", "Pediatria", "Ginebologia"};
     private Integer[] daysArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
     private Integer[] monthsArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    private Integer[] yearsArray = new Integer[200];
+    private Integer[] yearsArray = new Integer[201];
     private Integer[] hoursArray = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     private Integer[] minutesArray = new Integer[61];
 
@@ -54,20 +55,27 @@ public class AddActivity extends AppCompatActivity {
 
 
         //Data
+        Calendar today = Calendar.getInstance();
+        int day = today.get(Calendar.DAY_OF_MONTH);
+        int month = today.get(Calendar.MONTH);
+        int year = today.get(Calendar.YEAR);
+
         final TextView textViewDate = (TextView) findViewById(R.id.textViewDate);
 
         final Spinner spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
         ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, daysArray);
         adapterDay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDay.setAdapter(adapterDay);
+        spinnerDay.setSelection(day - 1);
 
         final Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, monthsArray);
         adapterMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMonth.setAdapter(adapterMonth);
+        spinnerMonth.setSelection(month);
 
         int y = 1900;
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 201; i++){
             yearsArray[i] = (y);
             y++;
         }
@@ -76,15 +84,19 @@ public class AddActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, yearsArray);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(adapterYear);
+        spinnerYear.setSelection(year - 1900);
 
 
         //Hora
+        int hour = today.get((Calendar.HOUR_OF_DAY));
+        int minute = today.get((Calendar.MINUTE));
         final TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
 
         final Spinner spinnerHour = (Spinner) findViewById(R.id.spinnerHour);
         ArrayAdapter<Integer> adapterHour = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, hoursArray);
         adapterHour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerHour.setAdapter(adapterHour);
+        spinnerHour.setSelection(hour);
 
         for (Integer i = 0; i < 61; i++){
             minutesArray[i] = i;
@@ -94,6 +106,7 @@ public class AddActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapterMinute = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, minutesArray);
         adapterMinute.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMinute.setAdapter(adapterMinute);
+        spinnerMinute.setSelection(minute);
 
 
         //Comentário

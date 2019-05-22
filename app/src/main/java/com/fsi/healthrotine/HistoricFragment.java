@@ -1,88 +1,43 @@
 package com.fsi.healthrotine;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.text.CollationElementIterator;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
-    DataBase db = new DataBase(this);
-    LinearLayout layout;
-    Context context;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class HistoricFragment extends Fragment {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_historic:
-                    mTextMessage.setText(R.string.title_historic);
-                    return true;
-                case R.id.navigation_rotine:
-                    mTextMessage.setText(R.string.title_rotine);
-                    return true;
-                case R.id.navigation_future:
-                    mTextMessage.setText(R.string.title_future);
-                    return true;
-            }
-            return false;
-        }
-    };
 
+    public HistoricFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = this;
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToAddPage();
-            }
-        });
-
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+        /*LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);
 
         List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
@@ -166,12 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 card.addView(innerLayout);
                 layout.addView(card);
             }
-        }
-    }
+        }*/
 
-    public void goToAddPage(){
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
+        return inflater.inflate(R.layout.fragment_historic, container, false);
     }
 
 }

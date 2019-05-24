@@ -29,12 +29,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoricFragment extends Fragment {
-    private DataBase db;
+public class FutureFragment extends Fragment {
     private Context context;
+    private DataBase db;
 
 
-    public HistoricFragment() {
+    public FutureFragment() {
         // Required empty public constructor
     }
 
@@ -83,7 +83,7 @@ public class HistoricFragment extends Fragment {
 
         for(MedicalAppointment appointment : medicalAppointments){
             Date today = new Date(Calendar.getInstance().getTime().getTime());
-            if (today.compareTo(appointment.getDate()) == 1){
+            if (today.compareTo(appointment.getDate()) == -1){
                 CardView card = new CardView(context);
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

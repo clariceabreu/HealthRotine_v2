@@ -13,6 +13,7 @@ public class MedicalAppointment {
 
     public MedicalAppointment(){}
 
+    //constructor to update
     public MedicalAppointment(int _id, String _specialty, Date _date, Time _time, String _comments){
         this.id = _id;
         this.specialty = _specialty;

@@ -35,6 +35,7 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String END_DATE_COLUMN = "endDate";
     private static final String DURATION_COLUMN = "duration";
     private static final String FREQUENCY_COLUMN = "frequency";
+    private static final String FREQUENCY_UNITY_COLUMN = "frequencyUnity";
     private static final String TYPE_COLUMN = "type";
     private static final String DOSAGE_COLUMN = "dosage";
 
@@ -60,6 +61,7 @@ public class DataBase extends SQLiteOpenHelper {
                 + TIME_COLUMN + " TEXT, "
                 + DURATION_COLUMN + " TEXT, "
                 + FREQUENCY_COLUMN + " TEXT, "
+                + FREQUENCY_UNITY_COLUMN + " TEXT, "
                 + TYPE_COLUMN + " TEXT, "
                 + DOSAGE_COLUMN + " TEXT, "
                 + COMMENTS_COLUMN + " TEXT)";
@@ -103,6 +105,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(TIME_COLUMN, timeFormat.format(medicine.getTime()));
         values.put(DURATION_COLUMN, timeFormat.format(medicine.getDuration()));
         values.put(FREQUENCY_COLUMN, timeFormat.format(medicine.getFrequency()));
+        values.put(FREQUENCY_UNITY_COLUMN, timeFormat.format(medicine.getFrequencyUnity()));
         values.put(TYPE_COLUMN, timeFormat.format(medicine.getType()));
         values.put(DOSAGE_COLUMN, timeFormat.format(medicine.getDosage()));
         values.put(COMMENTS_COLUMN, medicine.getComments());
@@ -213,9 +216,10 @@ public class DataBase extends SQLiteOpenHelper {
                     medicine.setTime(time);
                     medicine.setDuration(Integer.parseInt(cursor.getString(4)));
                     medicine.setFrequency(Integer.parseInt(cursor.getString(5)));
-                    medicine.setType(cursor.getString(6));
-                    medicine.setDosage(cursor.getString(7));
-                    medicine.setComments(cursor.getString(8));
+                    medicine.setFrequencyUnity(cursor.getString(6));
+                    medicine.setType(cursor.getString(7));
+                    medicine.setDosage(cursor.getString(8));
+                    medicine.setComments(cursor.getString(9));
 
                     medicines.add(medicine);
                 } catch (ParseException e) {
@@ -258,6 +262,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(TIME_COLUMN, timeFormat.format(medicine.getTime()));
         values.put(DURATION_COLUMN, timeFormat.format(medicine.getDuration()));
         values.put(FREQUENCY_COLUMN, timeFormat.format(medicine.getFrequency()));
+        values.put(FREQUENCY_UNITY_COLUMN, timeFormat.format(medicine.getFrequencyUnity()));
         values.put(TYPE_COLUMN, timeFormat.format(medicine.getType()));
         values.put(DOSAGE_COLUMN, timeFormat.format(medicine.getDosage()));
         values.put(COMMENTS_COLUMN, medicine.getComments());

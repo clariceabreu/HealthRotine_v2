@@ -123,6 +123,99 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewFrequency"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Frequência"
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="17dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            tools:visibility="gone">
+
+            <Spinner
+                android:id="@+id/spinnerFrquency"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border_spinner"
+                tools:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerFrequencyUnity"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/custom_border_spinner"
+                tools:visibility="gone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewDuration"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Duração"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            tools:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spinnerDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_border_spinner"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Tipo de administração"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:hint="Pílulas, gotas, intravenoso..."
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewDosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Dosagem"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextDosage"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:hint="2 mg, 0,6ml/L..."
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
+        <TextView
             android:id="@+id/textViewComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

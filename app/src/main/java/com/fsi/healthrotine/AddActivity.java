@@ -20,13 +20,16 @@ import java.sql.Time;
 import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
-    private String[] typesArray = new String[]{"Selecione", "Consulta", "Exame", "Remédio"};
+    private String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio", "Exame"};
     private String[] specialtiesArray = new String[]{"Selecione","Clínica Médica", "Oftomologia", "Otorrinologia", "Pediatria", "Ginebologia"};
     private Integer[] daysArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
     private Integer[] monthsArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private Integer[] yearsArray = new Integer[201];
     private Integer[] hoursArray = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     private Integer[] minutesArray = new Integer[61];
+    private Integer[] frequenciesArray = new Integer[365];
+    private String[] frequencyUnitiesArray = new String[]{"horas", "dias"};
+    private String[] durationArray = new String[367];
 
     DataBase db = new DataBase(this);
 
@@ -35,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        //Tipo
+        //Data type
         Spinner spinnerType = (Spinner) findViewById(R.id.spinnerType);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, typesArray);
@@ -45,7 +48,7 @@ public class AddActivity extends AppCompatActivity {
         spinnerType.setAdapter(adapterType);
 
 
-        //Especialidade
+        //Specialty
         final TextView textViewSpecialy = (TextView) findViewById(R.id.textViewSpecialty);
 
         final Spinner spinnerSpecialty = (Spinner) findViewById(R.id.spinnerSpecialty);
@@ -54,7 +57,7 @@ public class AddActivity extends AppCompatActivity {
         spinnerSpecialty.setAdapter(adapterSpecialty);
 
 
-        //Data
+        //Date
         Calendar today = Calendar.getInstance();
         int day = today.get(Calendar.DAY_OF_MONTH);
         int month = today.get(Calendar.MONTH);
@@ -87,7 +90,7 @@ public class AddActivity extends AppCompatActivity {
         spinnerYear.setSelection(year - 1900);
 
 
-        //Hora
+        //Hour
         int hour = today.get((Calendar.HOUR_OF_DAY));
         int minute = today.get((Calendar.MINUTE));
         final TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
@@ -108,13 +111,53 @@ public class AddActivity extends AppCompatActivity {
         spinnerMinute.setAdapter(adapterMinute);
         spinnerMinute.setSelection(minute);
 
+        //Frequency
+        for (Integer i = 1; i < 366; i ++){
+            frequenciesArray[i-1] = i;
+        }
 
-        //Comentário
+        final TextView textViewFrequency = (TextView) findViewById(R.id.textViewFrequency);
+        final Spinner spinnerFrequency = (Spinner) findViewById(R.id.spinnerFrquency);
+        ArrayAdapter<Integer> adapterFrequency = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, frequenciesArray);
+        adapterFrequency.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFrequency.setAdapter(adapterFrequency);
+
+        final Spinner spinnerFrequencyUnity = (Spinner) findViewById(R.id.spinnerFrequencyUnity);
+        ArrayAdapter<String> adapterFrequencyUnity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, frequencyUnitiesArray);
+        adapterFrequencyUnity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFrequencyUnity.setAdapter(adapterFrequencyUnity);
+
+        //Duration
+        durationArray[0] = "Selecione";
+        durationArray[1] = "Ininterrupto";
+        for (Integer i = 1; i < 366; i ++){
+            if (i == 2)
+                durationArray[i + 1] = i.toString() + " dia";
+            else
+                durationArray[i + 1] = i.toString() + " dias";
+        }
+
+        System.out.println("duration :" + durationArray.toString());
+        final TextView textViewDuration = (TextView) findViewById(R.id.textViewDuration);
+        final Spinner spinnerDuration = (Spinner) findViewById(R.id.spinnerDuration);
+        ArrayAdapter<String> adapterDuration = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, durationArray);
+        adapterDuration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDuration.setAdapter(adapterDuration);
+
+        //Medicine type
+        final TextView textViewType = (TextView) findViewById(R.id.textViewType);
+        final EditText editTextType = (EditText) findViewById(R.id.editTextType);
+
+        //Dosage
+        final TextView textViewDosage = (TextView) findViewById(R.id.textViewDosage);
+        final EditText editTextDosage = (EditText) findViewById(R.id.editTextDosage);
+
+        //Comment
         final TextView textViewComment = (TextView) findViewById(R.id.textViewComment);
         final EditText editTextComment = (EditText) findViewById(R.id.editTextComment);
 
 
-        //Botão
+        //Button
         final Button buttonCreate = (Button) findViewById(R.id.buttonCreate);
 
 
@@ -136,7 +179,41 @@ public class AddActivity extends AppCompatActivity {
                     editTextComment.setVisibility(View.VISIBLE);
                     buttonCreate.setVisibility(View.VISIBLE);
 
-                } else {
+                    textViewFrequency.setVisibility(View.GONE);
+                    spinnerFrequency.setVisibility(View.GONE);
+                    spinnerFrequencyUnity.setVisibility(View.GONE);
+                    textViewDuration.setVisibility(View.GONE);
+                    spinnerDuration.setVisibility(View.GONE);
+                    textViewType.setVisibility(View.GONE);
+                    editTextType.setVisibility(View.GONE);
+                    textViewDosage.setVisibility(View.GONE);
+                    editTextDosage.setVisibility(View.GONE);
+
+                } else if(position == 2){
+                    textViewSpecialy.setVisibility(View.GONE);
+                    spinnerSpecialty.setVisibility(View.GONE);
+
+                    textViewDate.setVisibility(View.VISIBLE);
+                    spinnerDay.setVisibility(View.VISIBLE);
+                    spinnerMonth.setVisibility(View.VISIBLE);
+                    spinnerYear.setVisibility(View.VISIBLE);
+                    textViewHour.setVisibility(View.VISIBLE);
+                    spinnerHour.setVisibility(View.VISIBLE);
+                    spinnerMinute.setVisibility(View.VISIBLE);
+                    textViewFrequency.setVisibility(View.VISIBLE);
+                    spinnerFrequency.setVisibility(View.VISIBLE);
+                    spinnerFrequencyUnity.setVisibility(View.VISIBLE);
+                    textViewDuration.setVisibility(View.VISIBLE);
+                    spinnerDuration.setVisibility(View.VISIBLE);
+                    textViewType.setVisibility(View.VISIBLE);
+                    editTextType.setVisibility(View.VISIBLE);
+                    textViewDosage.setVisibility(View.VISIBLE);
+                    editTextDosage.setVisibility(View.VISIBLE);
+                    textViewComment.setVisibility(View.VISIBLE);
+                    editTextComment.setVisibility(View.VISIBLE);
+                    buttonCreate.setVisibility(View.VISIBLE);
+
+                } else{
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
                     textViewDate.setVisibility(View.GONE);
@@ -149,6 +226,15 @@ public class AddActivity extends AppCompatActivity {
                     textViewComment.setVisibility(View.GONE);
                     editTextComment.setVisibility(View.GONE);
                     buttonCreate.setVisibility(View.GONE);
+                    textViewFrequency.setVisibility(View.GONE);
+                    spinnerFrequency.setVisibility(View.GONE);
+                    spinnerFrequencyUnity.setVisibility(View.GONE);
+                    textViewDuration.setVisibility(View.GONE);
+                    spinnerDuration.setVisibility(View.GONE);
+                    textViewType.setVisibility(View.GONE);
+                    editTextType.setVisibility(View.GONE);
+                    textViewDosage.setVisibility(View.GONE);
+                    editTextDosage.setVisibility(View.GONE);
                 }
 
 

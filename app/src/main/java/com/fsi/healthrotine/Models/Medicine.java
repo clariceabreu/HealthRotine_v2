@@ -9,7 +9,8 @@ public class Medicine {
     private Date date;
     private Date endDate;
     private Time time;
-    private int frequency; //in hours
+    private int frequency;
+    private String frequencyUnity;
     private int duration; //in days (set as -1 when the medicine is for continuous use
     private String type; //pills, drops or intravenous
     private String dosage;
@@ -18,24 +19,26 @@ public class Medicine {
     public Medicine(){}
 
     //constructor to update
-    public Medicine(int _id, Date _startDate, Time _startTime, int _frequency, int _duratiion, String _type, String _dosage, String _comments){
+    public Medicine(int _id, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duratiion, String _type, String _dosage, String _comments){
         this.id = _id;
         this.date = _startDate;
         this.duration = _duratiion;
         this.endDate = this.addDays(this.getDuration());
         this.time = _startTime;
         this.frequency = _frequency;
+        this.frequencyUnity = _frequencyUnity;
         this.type = _type;
         this.dosage = _dosage;
         this.comments = _comments;
     }
 
-    public Medicine(Date _startDate, Time _startTime, int _frequency, int _duration, String _type, String _dosage, String _comments){
+    public Medicine(Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments){
         this.date = _startDate;
         this.duration = _duration;
         this.endDate = this.addDays(this.getDuration());
         this.time = _startTime;
         this.frequency = _frequency;
+        this.frequencyUnity = _frequencyUnity;
         this.type = _type;
         this.dosage = _dosage;
         this.comments = _comments;
@@ -95,6 +98,14 @@ public class Medicine {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public String getFrequencyUnity() {
+        return frequencyUnity;
+    }
+
+    public void setFrequencyUnity(String frequencyUnity) {
+        this.frequencyUnity = frequencyUnity;
     }
 
     public String getType() {

@@ -126,12 +126,13 @@ public class AddActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterFrequencyUnity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, frequencyUnitiesArray);
         adapterFrequencyUnity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFrequencyUnity.setAdapter(adapterFrequencyUnity);
+        spinnerFrequency.setSelection(7);
 
         //Duration
         durationArray[0] = "Selecione";
         durationArray[1] = "Ininterrupto";
         for (Integer i = 1; i < 366; i ++){
-            if (i == 2)
+            if (i == 1)
                 durationArray[i + 1] = i.toString() + " dia";
             else
                 durationArray[i + 1] = i.toString() + " dias";

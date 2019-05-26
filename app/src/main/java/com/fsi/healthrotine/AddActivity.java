@@ -14,8 +14,9 @@ import android.widget.TextView;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
+import com.fsi.healthrotine.Models.Medicine;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.Calendar;
 
@@ -30,6 +31,7 @@ public class AddActivity extends AppCompatActivity {
     private Integer[] frequenciesArray = new Integer[365];
     private String[] frequencyUnitiesArray = new String[]{"horas", "dias"};
     private String[] durationArray = new String[367];
+    private int selectedPosition = 0;
 
     DataBase db = new DataBase(this);
 
@@ -92,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Hour
         int hour = today.get((Calendar.HOUR_OF_DAY));
-        int minute = today.get((Calendar.MINUTE));
+        final int minute = today.get((Calendar.MINUTE));
         final TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
 
         final Spinner spinnerHour = (Spinner) findViewById(R.id.spinnerHour);
@@ -165,8 +167,20 @@ public class AddActivity extends AppCompatActivity {
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedPosition = position;
+
                 // Handle
                 if (position == 1){
+                    textViewFrequency.setVisibility(View.GONE);
+                    spinnerFrequency.setVisibility(View.GONE);
+                    spinnerFrequencyUnity.setVisibility(View.GONE);
+                    textViewDuration.setVisibility(View.GONE);
+                    spinnerDuration.setVisibility(View.GONE);
+                    textViewType.setVisibility(View.GONE);
+                    editTextType.setVisibility(View.GONE);
+                    textViewDosage.setVisibility(View.GONE);
+                    editTextDosage.setVisibility(View.GONE);
+
                     textViewSpecialy.setVisibility(View.VISIBLE);
                     spinnerSpecialty.setVisibility(View.VISIBLE);
                     textViewDate.setVisibility(View.VISIBLE);
@@ -180,16 +194,7 @@ public class AddActivity extends AppCompatActivity {
                     editTextComment.setVisibility(View.VISIBLE);
                     buttonCreate.setVisibility(View.VISIBLE);
 
-                    textViewFrequency.setVisibility(View.GONE);
-                    spinnerFrequency.setVisibility(View.GONE);
-                    spinnerFrequencyUnity.setVisibility(View.GONE);
-                    textViewDuration.setVisibility(View.GONE);
-                    spinnerDuration.setVisibility(View.GONE);
-                    textViewType.setVisibility(View.GONE);
-                    editTextType.setVisibility(View.GONE);
-                    textViewDosage.setVisibility(View.GONE);
-                    editTextDosage.setVisibility(View.GONE);
-
+                    editTextComment.setHint("Endereço, informações importantes, lembretes...");
                 } else if(position == 2){
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
@@ -213,6 +218,8 @@ public class AddActivity extends AppCompatActivity {
                     textViewComment.setVisibility(View.VISIBLE);
                     editTextComment.setVisibility(View.VISIBLE);
                     buttonCreate.setVisibility(View.VISIBLE);
+
+                    editTextComment.setHint("Reações alérgicas, efeitos colaterais...");
 
                 } else{
                     textViewSpecialy.setVisibility(View.GONE);
@@ -250,26 +257,70 @@ public class AddActivity extends AppCompatActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MedicalAppointment medicalAppointment = new MedicalAppointment();
+                //to do => check if all information are null and if it's show error and don't go to main page
 
-                String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
-                medicalAppointment.setSpecialty(specialty);
+                if (selectedPosition == 1){
+                    MedicalAppointment medicalAppointment = new MedicalAppointment();
 
-                int day = daysArray[spinnerDay.getSelectedItemPosition()];
-                int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
-                int year = yearsArray[spinnerYear.getSelectedItemPosition()];
-                medicalAppointment.setDate(new Date(year - 1900, month - 1, day)); //no ano tá -1900 e no mês tá -1 pq é assim por padrão da classe
+                    String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
+                    medicalAppointment.setSpecialty(specialty);
 
-                int hour = hoursArray[spinnerHour.getSelectedItemPosition()];
-                int minutes = minutesArray[spinnerMinute.getSelectedItemPosition()];
-                medicalAppointment.setTime(new Time(hour, minutes, 0));
+                    int day = daysArray[spinnerDay.getSelectedItemPosition()];
+                    int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
+                    int year = yearsArray[spinnerYear.getSelectedItemPosition()];
+                    int hour = hoursArray[spinnerHour.getSelectedItemPosition()];
+                    int minutes = minutesArray[spinnerMinute.getSelectedItemPosition()];
+                    medicalAppointment.setTime(new Time(hour, minutes, 0));
+                    medicalAppointment.setDate(new Date(year - 1900, month - 1, day, hour, minutes));
 
-                medicalAppointment.setComments(editTextComment.getText().toString());
+                    medicalAppointment.setComments(editTextComment.getText().toString());
 
-                db.addMedicalAppointment(medicalAppointment);
+                    db.addMedicalAppointment(medicalAppointment);
 
-                Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                    Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                } else if (selectedPosition == 2){
+                    Medicine medicine = new Medicine();
+
+                    int day = daysArray[spinnerDay.getSelectedItemPosition()];
+                    int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
+                    int year = yearsArray[spinnerYear.getSelectedItemPosition()];
+                    int hour =  hoursArray[spinnerHour.getSelectedItemPosition()];
+                    int minutes = minutesArray[spinnerMinute.getSelectedItemPosition()];
+                    medicine.setDate(new Date(year - 1900, month - 1, day, hour, minutes));
+                    medicine.setTime(new Time(hour, minutes, 0));
+
+
+                    int duration = spinnerDuration.getSelectedItemPosition() - 1; //if uninterrumpt the frequency will be 0
+                    medicine.setDuration(duration);
+
+
+                    String frequencyUnit;
+                    if (spinnerFrequencyUnity.getSelectedItemPosition()== 0){
+                        frequencyUnit = "hours";
+                    } else {
+                        frequencyUnit = "days";
+                    }
+                    medicine.setFrequencyUnity(frequencyUnit);
+
+                    int frequency = frequenciesArray[spinnerFrequency.getSelectedItemPosition()];
+                    medicine.setFrequency(frequency);
+
+                    medicine.setType(editTextType.getText().toString());
+
+                    medicine.setDosage(editTextDosage.getText().toString());
+
+                    medicine.setComments(editTextComment.getText().toString());
+
+                    System.out.println("teste ");
+
+                    db.addMedicine(medicine);
+
+                    Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                }
 
                 goToMainPage();
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
+import com.fsi.healthrotine.Models.Medicine;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -38,7 +39,6 @@ public class HistoricFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = container.getContext();
@@ -56,6 +56,8 @@ public class HistoricFragment extends Fragment {
 
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);
+
+        System.out.println("teste 2");
 
         List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
 
@@ -110,7 +112,7 @@ public class HistoricFragment extends Fragment {
                 title.setPadding(0,0,0,20);
                 innerLayout.addView(title);
 
-
+                //to do
                 if (appointment.getSpecialty() != "Selecione"){ //por algum motivo esse if não tá funcionando
                     TextView specialty = new TextView(context);
                     String specialtyText =  "<b>Especialidade: </b> " + appointment.getSpecialty();

@@ -12,7 +12,7 @@ import android.support.v4.app.NavUtils;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,12 +32,14 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String COMMENTS_COLUMN = "comments";
 
     private static final String TB_MEDICINE = "tb_medicine";
+    private static final String NAME_COLUMN = "name";
     private static final String END_DATE_COLUMN = "endDate";
     private static final String DURATION_COLUMN = "duration";
     private static final String FREQUENCY_COLUMN = "frequency";
     private static final String FREQUENCY_UNITY_COLUMN = "frequencyUnity";
     private static final String TYPE_COLUMN = "type";
     private static final String DOSAGE_COLUMN = "dosage";
+    private static final String ADMINISTRATION_TIMES_COlUMN = "administrationTimes";
 
 
     public DataBase(Context context) {
@@ -54,8 +56,11 @@ public class DataBase extends SQLiteOpenHelper {
                 + TIME_COLUMN + " TEXT, "
                 + COMMENTS_COLUMN + " TEXT)";
 
+        db.execSQL(QUERRY_MEDICALAPPOINTMENT);
+
         String QUERRY_MEDICINE = "CREATE TABLE " + TB_MEDICINE + "("
                 + ID_COLUMN + " INTEGER PRIMARY KEY, "
+                + NAME_COLUMN + " TEXT, "
                 + DATE_COLUMN + " TEXT, "
                 + END_DATE_COLUMN + " TEXT, "
                 + TIME_COLUMN + " TEXT, "
@@ -64,11 +69,10 @@ public class DataBase extends SQLiteOpenHelper {
                 + FREQUENCY_UNITY_COLUMN + " TEXT, "
                 + TYPE_COLUMN + " TEXT, "
                 + DOSAGE_COLUMN + " TEXT, "
+                + ADMINISTRATION_TIMES_COlUMN + " TEXT, "
                 + COMMENTS_COLUMN + " TEXT)";
 
-
-
-        db.execSQL(QUERRY_MEDICALAPPOINTMENT);
+        db.execSQL(QUERRY_MEDICINE);
 
     }
 
@@ -100,14 +104,16 @@ public class DataBase extends SQLiteOpenHelper {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
         ContentValues values = new ContentValues();
+        values.put(NAME_COLUMN, medicine.getName());
         values.put(DATE_COLUMN, dateFormat.format(medicine.getDate()));
         values.put(END_DATE_COLUMN, dateFormat.format(medicine.getEndDate()));
         values.put(TIME_COLUMN, timeFormat.format(medicine.getTime()));
-        values.put(DURATION_COLUMN, timeFormat.format(medicine.getDuration()));
-        values.put(FREQUENCY_COLUMN, timeFormat.format(medicine.getFrequency()));
-        values.put(FREQUENCY_UNITY_COLUMN, timeFormat.format(medicine.getFrequencyUnity()));
-        values.put(TYPE_COLUMN, timeFormat.format(medicine.getType()));
-        values.put(DOSAGE_COLUMN, timeFormat.format(medicine.getDosage()));
+        values.put(DURATION_COLUMN, medicine.getDuration());
+        values.put(FREQUENCY_COLUMN, medicine.getFrequency());
+        values.put(FREQUENCY_UNITY_COLUMN, medicine.getFrequencyUnity());
+        values.put(TYPE_COLUMN, medicine.getType());
+        values.put(DOSAGE_COLUMN, medicine.getDosage());
+        values.put(ADMINISTRATION_TIMES_COlUMN, convertArrayToString(medicine.getAdministrationTimes()));
         values.put(COMMENTS_COLUMN, medicine.getComments());
 
         db.insert(TB_MEDICINE, null, values);
@@ -206,20 +212,22 @@ public class DataBase extends SQLiteOpenHelper {
                 try {
                     Medicine medicine = new Medicine();
                     medicine.setId(Integer.parseInt(cursor.getString(0)));
+                    medicine.setName(cursor.getString(1));
 
-                    Date date = new Date(dateFormat.parse(cursor.getString(1)).getTime());
-                    Date endDate = new Date(dateFormat.parse(cursor.getString(2)).getTime());
-                    Time time = new Time(timeFormat.parse(cursor.getString(3)).getTime());
+                    Date date = new Date(dateFormat.parse(cursor.getString(2)).getTime());
+                    Date endDate = new Date(dateFormat.parse(cursor.getString(3)).getTime());
+                    Time time = new Time(timeFormat.parse(cursor.getString(4)).getTime());
 
                     medicine.setDate(date);
                     medicine.setEndDate(endDate);
                     medicine.setTime(time);
-                    medicine.setDuration(Integer.parseInt(cursor.getString(4)));
-                    medicine.setFrequency(Integer.parseInt(cursor.getString(5)));
-                    medicine.setFrequencyUnity(cursor.getString(6));
-                    medicine.setType(cursor.getString(7));
-                    medicine.setDosage(cursor.getString(8));
-                    medicine.setComments(cursor.getString(9));
+                    medicine.setDuration(Integer.parseInt(cursor.getString(5)));
+                    medicine.setFrequency(Integer.parseInt(cursor.getString(6)));
+                    medicine.setFrequencyUnity(cursor.getString(7));
+                    medicine.setType(cursor.getString(8));
+                    medicine.setDosage(cursor.getString(9));
+                    medicine.setAdministrationTimes(convertStringToArray(cursor.getString(10)));
+                    medicine.setComments(cursor.getString(11));
 
                     medicines.add(medicine);
                 } catch (ParseException e) {
@@ -232,7 +240,6 @@ public class DataBase extends SQLiteOpenHelper {
 
         return medicines;
     }
-
 
 
     public void updateMedicalAppointment(MedicalAppointment medicalAppointment){
@@ -257,6 +264,7 @@ public class DataBase extends SQLiteOpenHelper {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
         ContentValues values = new ContentValues();
+        values.put(NAME_COLUMN, medicine.getName());
         values.put(DATE_COLUMN, dateFormat.format(medicine.getDate()));
         values.put(END_DATE_COLUMN, dateFormat.format(medicine.getEndDate()));
         values.put(TIME_COLUMN, timeFormat.format(medicine.getTime()));
@@ -265,9 +273,33 @@ public class DataBase extends SQLiteOpenHelper {
         values.put(FREQUENCY_UNITY_COLUMN, timeFormat.format(medicine.getFrequencyUnity()));
         values.put(TYPE_COLUMN, timeFormat.format(medicine.getType()));
         values.put(DOSAGE_COLUMN, timeFormat.format(medicine.getDosage()));
+        values.put(ADMINISTRATION_TIMES_COlUMN, convertArrayToString(medicine.getAdministrationTimes()));
         values.put(COMMENTS_COLUMN, medicine.getComments());
 
         db.update(TB_MEDICINE, values, ID_COLUMN + " = ? ", new String[]{String.valueOf(medicine.getId())});
+    }
+
+    public static String strSeparator = "__,__";
+    public static String convertArrayToString(List<Date> array){
+        String str = "";
+        if (array != null){
+            for (Date date : array) {
+                str = str + date.toString() + strSeparator;
+            }
+        }
+        return str;
+    }
+    public static List<Date> convertStringToArray(String str){
+        String[] arr = str.split(strSeparator);
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Date> dates = new ArrayList<Date>();
+
+        for (int i = 0; i < arr.length; i ++){
+            dates.add(new Date(arr[i]));
+        }
+
+
+        return dates;
     }
 
 }

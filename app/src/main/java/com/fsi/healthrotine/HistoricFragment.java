@@ -57,8 +57,6 @@ public class HistoricFragment extends Fragment {
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);
 
-        System.out.println("teste 2");
-
         List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
 
         //Ordena o array a partir da data e hora de forma decrescente

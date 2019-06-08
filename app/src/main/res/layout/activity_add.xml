@@ -48,6 +48,27 @@
             tools:visibility="gone" />
 
         <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Nome"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:hint="Pílulas, gotas, intravenoso..."
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
+        <TextView
             android:id="@+id/textViewDate"
             android:layout_width="86dp"
             android:layout_height="wrap_content"

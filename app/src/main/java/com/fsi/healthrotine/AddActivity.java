@@ -16,12 +16,14 @@ import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
 
+import org.w3c.dom.Text;
+
 import java.util.Date;
 import java.sql.Time;
 import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
-    private String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio", "Exame"};
+    private String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio"};
     private String[] specialtiesArray = new String[]{"Selecione","Clínica Médica", "Oftomologia", "Otorrinologia", "Pediatria", "Ginebologia"};
     private Integer[] daysArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
     private Integer[] monthsArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -58,6 +60,9 @@ public class AddActivity extends AppCompatActivity {
         adapterSpecialty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSpecialty.setAdapter(adapterSpecialty);
 
+        //Name
+        final TextView textViewName = (TextView) findViewById(R.id.textViewName);
+        final EditText editTextName = (EditText) findViewById(R.id.editTextName);
 
         //Date
         Calendar today = Calendar.getInstance();
@@ -171,6 +176,8 @@ public class AddActivity extends AppCompatActivity {
 
                 // Handle
                 if (position == 1){
+                    textViewName.setVisibility(View.GONE);
+                    editTextName.setVisibility(View.GONE);
                     textViewFrequency.setVisibility(View.GONE);
                     spinnerFrequency.setVisibility(View.GONE);
                     spinnerFrequencyUnity.setVisibility(View.GONE);
@@ -199,6 +206,8 @@ public class AddActivity extends AppCompatActivity {
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
 
+                    textViewName.setVisibility(View.VISIBLE);
+                    editTextName.setVisibility(View.VISIBLE);
                     textViewDate.setVisibility(View.VISIBLE);
                     spinnerDay.setVisibility(View.VISIBLE);
                     spinnerMonth.setVisibility(View.VISIBLE);
@@ -224,6 +233,8 @@ public class AddActivity extends AppCompatActivity {
                 } else{
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
+                    textViewName.setVisibility(View.GONE);
+                    editTextName.setVisibility(View.GONE);
                     textViewDate.setVisibility(View.GONE);
                     spinnerDay.setVisibility(View.GONE);
                     spinnerMonth.setVisibility(View.GONE);
@@ -283,6 +294,7 @@ public class AddActivity extends AppCompatActivity {
                 } else if (selectedPosition == 2){
                     Medicine medicine = new Medicine();
 
+                    medicine.setName(editTextName.getText().toString());
                     int day = daysArray[spinnerDay.getSelectedItemPosition()];
                     int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
                     int year = yearsArray[spinnerYear.getSelectedItemPosition()];
@@ -291,10 +303,8 @@ public class AddActivity extends AppCompatActivity {
                     medicine.setDate(new Date(year - 1900, month - 1, day, hour, minutes));
                     medicine.setTime(new Time(hour, minutes, 0));
 
-
                     int duration = spinnerDuration.getSelectedItemPosition() - 1; //if uninterrumpt the frequency will be 0
                     medicine.setDuration(duration);
-
 
                     String frequencyUnit;
                     if (spinnerFrequencyUnity.getSelectedItemPosition()== 0){
@@ -308,12 +318,8 @@ public class AddActivity extends AppCompatActivity {
                     medicine.setFrequency(frequency);
 
                     medicine.setType(editTextType.getText().toString());
-
                     medicine.setDosage(editTextDosage.getText().toString());
-
                     medicine.setComments(editTextComment.getText().toString());
-
-                    System.out.println("teste ");
 
                     db.addMedicine(medicine);
 

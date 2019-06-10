@@ -226,11 +226,11 @@ public class DataBase extends SQLiteOpenHelper {
                     medicine.setDate(date);
                     medicine.setTime(time);
                     medicine.setDuration(Integer.parseInt(cursor.getString(5)));
-                    medicine.setFrequency(Integer.parseInt(cursor.getString(6)));
                     medicine.setFrequencyUnity(cursor.getString(7));
+                    medicine.setFrequency(Integer.parseInt(cursor.getString(6)));
                     medicine.setType(cursor.getString(8));
                     medicine.setDosage(cursor.getString(9));
-                    medicine.setAdministrationTimes(convertStringToArray(cursor.getString(10)));
+                    //medicine.setAdministrationTimes(convertStringToArray(cursor.getString(10)));
 
                     medicine.setComments(cursor.getString(11));
 

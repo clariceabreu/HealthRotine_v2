@@ -310,6 +310,12 @@ public class FutureFragment extends Fragment {
                 innerLayout.addView(specialty);
             }
 
+            if (obj.getType() == "Medicine" && nameText != null){
+                TextView name = new TextView(context);
+                name.setText(Html.fromHtml(nameText));
+                innerLayout.addView(name);
+            }
+
             TextView date = new TextView(context);
             date.setText(Html.fromHtml(dateText));
             innerLayout.addView(date);
@@ -319,12 +325,6 @@ public class FutureFragment extends Fragment {
             innerLayout.addView(time);
 
             if (obj.getType() == "Medicine"){
-                if (nameText != null){
-                    TextView name = new TextView(context);
-                    name.setText(Html.fromHtml(nameText));
-                    innerLayout.addView(name);
-                }
-
                 if (durationText != null) {
                     TextView duration = new TextView(context);
                     duration.setText(Html.fromHtml(durationText));

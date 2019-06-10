@@ -121,7 +121,7 @@ public class Medicine {
         this.frequency = frequency;
 
         if (frequency != -1) {
-            if (this.frequencyUnity == "horas") {
+            if (this.frequencyUnity.equals("horas")) {
                 this.administrationTimes = new ArrayList<Date>();
                 this.administrationTimes.add(this.getDate());
                 Date admTime = this.addHours(this.getDate(),frequency);
@@ -131,7 +131,7 @@ public class Medicine {
                     admTime = this.addHours(admTime, frequency);
                 }
 
-            } else if (this.frequencyUnity == "dias"){
+            } else if (this.frequencyUnity.equals("dias")){
                 this.administrationTimes = new ArrayList<Date>();
                 Date admTime = this.addDays(this.getDate(), frequency);
 

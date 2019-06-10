@@ -4,12 +4,20 @@ import java.sql.Time;
 import java.util.Date;
 
 public class CardObject {
+    private int id;
     private Date date;
-    private Date endDate;
     private Time time;
     private String type; //MedicalAppoitment or Medicine
 
     public  CardObject() { }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;
@@ -17,14 +25,6 @@ public class CardObject {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public Time getTime() {

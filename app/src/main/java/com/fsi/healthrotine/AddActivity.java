@@ -169,12 +169,13 @@ public class AddActivity extends AppCompatActivity {
         final Button buttonCreate = (Button) findViewById(R.id.buttonCreate);
 
 
+
+
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedPosition = position;
 
-                // Handle
                 if (position == 1){
                     textViewName.setVisibility(View.GONE);
                     editTextName.setVisibility(View.GONE);
@@ -205,6 +206,9 @@ public class AddActivity extends AppCompatActivity {
                 } else if(position == 2){
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
+                    spinnerFrequency.setVisibility(View.GONE);
+                    spinnerFrequencyUnity.setVisibility(View.GONE);
+                    spinnerFrequencyUnity.setVisibility(View.GONE);
 
                     textViewName.setVisibility(View.VISIBLE);
                     editTextName.setVisibility(View.VISIBLE);
@@ -215,9 +219,6 @@ public class AddActivity extends AppCompatActivity {
                     textViewHour.setVisibility(View.VISIBLE);
                     spinnerHour.setVisibility(View.VISIBLE);
                     spinnerMinute.setVisibility(View.VISIBLE);
-                    textViewFrequency.setVisibility(View.VISIBLE);
-                    spinnerFrequency.setVisibility(View.VISIBLE);
-                    spinnerFrequencyUnity.setVisibility(View.VISIBLE);
                     textViewDuration.setVisibility(View.VISIBLE);
                     spinnerDuration.setVisibility(View.VISIBLE);
                     textViewType.setVisibility(View.VISIBLE);
@@ -256,6 +257,27 @@ public class AddActivity extends AppCompatActivity {
                     editTextDosage.setVisibility(View.GONE);
                 }
 
+                spinnerDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0){
+                            textViewFrequency.setVisibility(View.VISIBLE);
+                            spinnerFrequency.setVisibility(View.VISIBLE);
+                            spinnerFrequencyUnity.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            textViewFrequency.setVisibility(View.GONE);
+                            spinnerFrequency.setVisibility(View.GONE);
+                            spinnerFrequencyUnity.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        // Another interface callback
+                    }
+                });
+
 
             }
 
@@ -273,8 +295,10 @@ public class AddActivity extends AppCompatActivity {
                 if (selectedPosition == 1){
                     MedicalAppointment medicalAppointment = new MedicalAppointment();
 
-                    String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
-                    medicalAppointment.setSpecialty(specialty);
+                    if (spinnerSpecialty.getSelectedItemPosition() != 0) {
+                        String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
+                        medicalAppointment.setSpecialty(specialty);
+                    }
 
                     int day = daysArray[spinnerDay.getSelectedItemPosition()];
                     int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
@@ -306,16 +330,16 @@ public class AddActivity extends AppCompatActivity {
                     int duration = spinnerDuration.getSelectedItemPosition() - 1; //if uninterrumpt the frequency will be 0
                     medicine.setDuration(duration);
 
-                    String frequencyUnit;
-                    if (spinnerFrequencyUnity.getSelectedItemPosition()== 0){
-                        frequencyUnit = "hours";
-                    } else {
-                        frequencyUnit = "days";
-                    }
-                    medicine.setFrequencyUnity(frequencyUnit);
 
-                    int frequency = frequenciesArray[spinnerFrequency.getSelectedItemPosition()];
-                    medicine.setFrequency(frequency);
+                    if (spinnerFrequency.getVisibility() == View.VISIBLE) {
+                        String frequencyUnit = frequencyUnitiesArray[spinnerFrequencyUnity.getSelectedItemPosition()];
+                        medicine.setFrequencyUnity(frequencyUnit);
+
+                        int frequency = frequenciesArray[spinnerFrequency.getSelectedItemPosition()];
+                        medicine.setFrequency(frequency);
+                    } else {
+                        medicine.setFrequency(-1);
+                    }
 
                     medicine.setType(editTextType.getText().toString());
                     medicine.setDosage(editTextDosage.getText().toString());

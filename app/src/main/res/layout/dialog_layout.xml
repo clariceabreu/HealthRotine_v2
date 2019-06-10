@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/dialogLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogTextViewType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipo"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"/>
+
+    <Spinner
+        android:id="@+id/dialogSpinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/dialogTextViewSpecialty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Espcialidade"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/dialogSpinnerSpecialty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -13,7 +13,7 @@ public class Medicine {
     private Date endDate;
     private Time time;
     private int frequency;
-    private String frequencyUnity; //hours or days
+    private String frequencyUnity; //horas ou dias
     private int duration; //in days (set as 0 when the medicine is for continuous use)
     private String type; //pills, drops or intravenous
     private String dosage;
@@ -120,23 +120,25 @@ public class Medicine {
     public void setFrequency(int frequency) {
         this.frequency = frequency;
 
-        if (this.frequencyUnity == "hours") {
-            this.administrationTimes = new ArrayList<Date>();
-            this.administrationTimes.add(this.getDate());
-            Date admTime = this.addHours(this.getDate(),frequency);
+        if (frequency != -1) {
+            if (this.frequencyUnity == "horas") {
+                this.administrationTimes = new ArrayList<Date>();
+                this.administrationTimes.add(this.getDate());
+                Date admTime = this.addHours(this.getDate(),frequency);
 
-            while (admTime.compareTo(this.endDate) == -1){
-                this.administrationTimes.add(admTime);
-                admTime = this.addHours(admTime, frequency);
-            }
+                while (admTime.compareTo(this.endDate) == -1){
+                    this.administrationTimes.add(admTime);
+                    admTime = this.addHours(admTime, frequency);
+                }
 
-        } else if (this.frequencyUnity == "days"){
-            this.administrationTimes = new ArrayList<Date>();
-            Date admTime = this.addDays(this.getDate(), frequency);
+            } else if (this.frequencyUnity == "dias"){
+                this.administrationTimes = new ArrayList<Date>();
+                Date admTime = this.addDays(this.getDate(), frequency);
 
-            while (admTime.compareTo(this.endDate) == -1){
-                this.administrationTimes.add(admTime);
-                admTime = this.addDays(admTime, frequency);
+                while (admTime.compareTo(this.endDate) == -1){
+                    this.administrationTimes.add(admTime);
+                    admTime = this.addDays(admTime, frequency);
+                }
             }
         }
     }

@@ -106,7 +106,9 @@ public class DataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(NAME_COLUMN, medicine.getName());
         values.put(DATE_COLUMN, dateFormat.format(medicine.getDate()));
-        values.put(END_DATE_COLUMN, dateFormat.format(medicine.getEndDate()));
+        if (medicine.getEndDate() != null){
+            values.put(END_DATE_COLUMN, dateFormat.format(medicine.getEndDate()));
+        }
         values.put(TIME_COLUMN, timeFormat.format(medicine.getTime()));
         values.put(DURATION_COLUMN, medicine.getDuration());
         values.put(FREQUENCY_COLUMN, medicine.getFrequency());
@@ -215,11 +217,13 @@ public class DataBase extends SQLiteOpenHelper {
                     medicine.setName(cursor.getString(1));
 
                     Date date = new Date(dateFormat.parse(cursor.getString(2)).getTime());
-                    Date endDate = new Date(dateFormat.parse(cursor.getString(3)).getTime());
+                    if (cursor.getString(3) != null) {
+                        Date endDate = new Date(dateFormat.parse(cursor.getString(3)).getTime());
+                        medicine.setEndDate(endDate);
+                    }
                     Time time = new Time(timeFormat.parse(cursor.getString(4)).getTime());
 
                     medicine.setDate(date);
-                    medicine.setEndDate(endDate);
                     medicine.setTime(time);
                     medicine.setDuration(Integer.parseInt(cursor.getString(5)));
                     medicine.setFrequency(Integer.parseInt(cursor.getString(6)));
@@ -227,6 +231,7 @@ public class DataBase extends SQLiteOpenHelper {
                     medicine.setType(cursor.getString(8));
                     medicine.setDosage(cursor.getString(9));
                     medicine.setAdministrationTimes(convertStringToArray(cursor.getString(10)));
+
                     medicine.setComments(cursor.getString(11));
 
                     medicines.add(medicine);
@@ -291,15 +296,18 @@ public class DataBase extends SQLiteOpenHelper {
     }
     public static List<Date> convertStringToArray(String str){
         String[] arr = str.split(strSeparator);
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<Date> dates = new ArrayList<Date>();
+        if (str != null && str.length() != 0){
+            List<Date> dates = new ArrayList<Date>();
 
-        for (int i = 0; i < arr.length; i ++){
-            dates.add(new Date(arr[i]));
+            for (int i = 0; i < arr.length; i ++){
+                dates.add(new Date(arr[i]));
+            }
+
+            return dates;
         }
-
-
-        return dates;
+        else {
+            return  null;
+        }
     }
 
 }

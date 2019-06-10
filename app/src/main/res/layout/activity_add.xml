@@ -123,6 +123,24 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewDuration"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Duração"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            tools:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spinnerDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_border_spinner"
+            tools:visibility="gone" />
+
+        <TextView
             android:id="@+id/textViewFrequency"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -155,23 +173,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewDuration"
-            android:layout_width="132dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Duração"
-            android:textSize="17dp"
-            android:textColor="@android:color/black"
-            tools:visibility="gone" />
-
-        <Spinner
-            android:id="@+id/spinnerDuration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_border_spinner"
-            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/textViewType"

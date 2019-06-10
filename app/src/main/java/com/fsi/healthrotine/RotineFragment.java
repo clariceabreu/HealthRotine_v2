@@ -21,6 +21,7 @@ import com.fsi.healthrotine.Models.CardObject;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,19 +66,23 @@ public class RotineFragment extends Fragment {
         int day = today.get(Calendar.DAY_OF_MONTH);
         int month = today.get(Calendar.MONTH);
         int year = today.get(Calendar.YEAR);
-        Date dateLimit = new Date(year - 1900, month, day, 23, 59, 59);
+        Date dateLimitStart = new Date(year - 1900, month, day, 00, 00, 00);
+        Date dateLimitEnd = new Date(year - 1900, month, day, 23, 59, 59);
 
         List<Medicine> medicines = db.getAllMedicines();
         for (Medicine medicine : medicines) {
             List<Date> administrationTimes = medicine.getAdministrationTimes();
 
-            if (administrationTimes != null && dateLimit.compareTo(medicine.getEndDate()) == -1) {
+            if (administrationTimes != null) {
                 for (Date admTime : medicine.getAdministrationTimes()){
 
-                    if (dateLimit.compareTo(admTime) == 1){
+                    if (dateLimitStart.compareTo(admTime) == -1 && dateLimitEnd.compareTo(admTime) == 1){
+                        System.out.println("medicine Id: " + medicine.getId() + " admTime :" + admTime);
+
                         CardObject cardObject = new CardObject();
+                        cardObject.setId(medicine.getId());
                         cardObject.setType("Medicine");
-                        cardObject.setTime(medicine.getTime());
+                        cardObject.setTime(new Time(admTime.getHours(), admTime.getMinutes(), 0));
 
                         cardObjects.add(cardObject);
                     }
@@ -86,12 +91,18 @@ public class RotineFragment extends Fragment {
 
         }
 
+
         List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
         if (medicalAppointments.size() > 0){
             for (MedicalAppointment medicalAppointment : medicalAppointments){
 
-                if (dateLimit.compareTo(medicalAppointment.getDate()) == 1){
+                System.out.println(medicalAppointment.getDate());
+                System.out.println(dateLimitStart.compareTo(medicalAppointment.getDate()) == -1);
+                System.out.println(dateLimitEnd.compareTo(medicalAppointment.getDate()) == 1);
+
+                if (dateLimitStart.compareTo(medicalAppointment.getDate()) == 0){
                     CardObject cardObject = new CardObject();
+                    cardObject.setId(medicalAppointment.getId());
                     cardObject.setType("MedicalAppointment");
                     cardObject.setTime(medicalAppointment.getTime());
 
@@ -116,58 +127,93 @@ public class RotineFragment extends Fragment {
             }
         });
 
-        System.out.println(cardObjects);
-
-        /*LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);
 
-        for(Medicine medicine : medicines){
-            //Date today = new Date(Calendar.getInstance().getTime().getTime());
-            if (today.compareTo(medicine.getDate()) == 1){
-                CardView card = new CardView(context);
+        for(CardObject obj : cardObjects){
+            CardView card = new CardView(context);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins(50,50,50, 50);
-                card.setLayoutParams(params);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(50,50,50, 50);
+            card.setLayoutParams(params);
 
-                card.setRadius(9);
-                card.setContentPadding(20, 15, 20, 15);
-                card.setCardBackgroundColor(Color.parseColor("#FF7F7F"));
-                card.setMaxCardElevation(15);
-                card.setCardElevation(9);
+            card.setRadius(9);
+            card.setContentPadding(20, 15, 20, 15);
+            card.setCardBackgroundColor(Color.parseColor("#84a27f"));
+            card.setMaxCardElevation(15);
+            card.setCardElevation(9);
 
-                LinearLayout innerLayout = new LinearLayout(context);
-                innerLayout.setLayoutParams(params);
-                innerLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout innerLayout = new LinearLayout(context);
+            innerLayout.setLayoutParams(params);
+            innerLayout.setOrientation(LinearLayout.VERTICAL);
 
-                TextView title = new TextView(context);
-                String titleText =  "<b>Remédio</b> ";
-                title.setText(Html.fromHtml(titleText));
-                title.setTextSize(15);
-                title.setPadding(0,0,0,20);
-                innerLayout.addView(title);
+            String titleText = null;
+            String timeText = null;
+            String nameText = null;
+            String commentsText = null;
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            if (obj.getType() == "Medicine") {
+                titleText =  "<b>Remédio</b> ";
 
+                Medicine medicine = null;
+                for (Medicine m : medicines){
+                    if (m.getId() == obj.getId()){
+                        medicine = m;
+                        break;
+                    }
+                }
 
-                TextView date = new TextView(context);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String dateText =  "<b>Nome: </b> " + dateFormat.format(medicine.getDate());
-                date.setText(Html.fromHtml(dateText));
-                innerLayout.addView(date);
+                if (medicine.getName() != null && medicine.getName().length() != 0) {
+                    nameText = "<b>Name: </b> " + medicine.getName();
+                }
+                if (medicine.getComments() != null && medicine.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + medicine.getComments();
+                }
+            } else if (obj.getType() == "MedicalAppointment") {
+                titleText = "<b>Consulta</b> ";
 
-                TextView time = new TextView(context);
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                String timeText =  "<b>Hora: </b> " + timeFormat.format(medicine.getTime());
-                time.setText(Html.fromHtml(timeText));
-                innerLayout.addView(time);
-
-
-                card.addView(innerLayout);
-                layout.addView(card);
+                MedicalAppointment medicalAppointment = null;
+                for (MedicalAppointment a : medicalAppointments){
+                    if (a.getId() == obj.getId()){
+                        medicalAppointment = a;
+                        break;
+                    }
+                }
+                if (medicalAppointment.getComments() != null && medicalAppointment.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + medicalAppointment.getComments();
+                }
             }
-        }*/
+
+            TextView title = new TextView(context);
+            title.setText(Html.fromHtml(titleText));
+            title.setTextSize(15);
+            title.setPadding(0,0,0,20);
+            innerLayout.addView(title);
+
+            if (obj.getType() == "Medicine" && nameText != null) {
+                TextView name = new TextView(context);
+                name.setText(Html.fromHtml(nameText));
+                innerLayout.addView(name);
+            }
+
+            TextView time = new TextView(context);
+            timeText =  "<b>Hora: </b> " + timeFormat.format(obj.getTime());
+            time.setText(Html.fromHtml(timeText));
+            innerLayout.addView(time);
+
+            if (commentsText != null){
+                TextView comments = new TextView(context);
+                comments.setText(Html.fromHtml(commentsText));
+                innerLayout.addView(comments);
+            }
+
+
+            card.addView(innerLayout);
+            layout.addView(card);
+        }
 
 
         return view;

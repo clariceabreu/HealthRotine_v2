@@ -1,7 +1,9 @@
 package com.fsi.healthrotine;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,14 +14,20 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fsi.healthrotine.DataBase.DataBase;
+import com.fsi.healthrotine.Models.CardObject;
 import com.fsi.healthrotine.Models.MedicalAppointment;
+import com.fsi.healthrotine.Models.Medicine;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +40,9 @@ import java.util.List;
 public class FutureFragment extends Fragment {
     private Context context;
     private DataBase db;
+    private LinearLayout layout;
+    private String[] typesArray = new String[]{"Ambos", "Consulta", "Remédio"};
+    private String[] specialtiesArray = new String[]{"Todas","Clínica Médica", "Oftomologia", "Otorrinologia", "Pediatria", "Ginebologia"};
 
 
     public FutureFragment() {
@@ -44,7 +55,7 @@ public class FutureFragment extends Fragment {
         context = container.getContext();
         db = new DataBase(context);
 
-        View view = inflater.inflate(R.layout.fragment_historic, container, false);
+        View view = inflater.inflate(R.layout.fragment_future, container, false);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,26 +65,145 @@ public class FutureFragment extends Fragment {
             }
         });
 
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
+        layout = (LinearLayout) view.findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);
 
-        List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
+        addCardViews(null, null);
+
+        final Button buttonFilter = (Button) view.findViewById(R.id.buttonFilter);
+
+        buttonFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                View alertView = getLayoutInflater().inflate(R.layout.dialog_layout, null);
+
+                final TextView textViewType = alertView.findViewById(R.id.dialogTextViewType);
+
+                final Spinner spinnerType = alertView.findViewById(R.id.dialogSpinnerType);
+                ArrayAdapter<String> adapterType = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, typesArray);
+                adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerType.setAdapter(adapterType);
+
+
+                final TextView textViewSpecialty = (TextView) alertView.findViewById(R.id.dialogTextViewType);
+
+                final Spinner spinnerSpecialty = (Spinner) alertView.findViewById(R.id.dialogSpinnerSpecialty);
+                ArrayAdapter<String> adapterSpecialty = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, specialtiesArray);
+                adapterSpecialty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerSpecialty.setAdapter(adapterSpecialty);
+
+
+                builder.setPositiveButton(
+                        "Filtrar",
+
+                        new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id) {
+                                layout.removeAllViews();
+
+                                Button buttonFilter = (Button) view.findViewById(R.id.buttonFilter);
+                                layout.addView(buttonFilter);
+
+                                String type = null;
+                                if (spinnerType.getSelectedItemPosition() == 1){
+                                    type = "medicalAppointment";
+                                } else if (spinnerType.getSelectedItemPosition() == 2){
+                                    type = "medicine";
+                                }
+
+                                String specialty = null;
+                                if (spinnerSpecialty.getSelectedItemPosition() != 0){
+                                    specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
+                                }
+
+                                addCardViews(type, specialty);
+
+                                dialog.cancel();
+                            }
+                        });
+
+                builder.setNegativeButton(
+                        "Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                final AlertDialog alert = builder.create();
+
+                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#008577"));
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#008577"));
+                    }
+                });
+
+
+                alert.setView(alertView, 30, 10, 30, 10);
+                alert.show();
+
+
+            }
+        });
+
+
+        return view;
+    }
+
+    public void addCardViews(String type, String speacilaty){
+        Date today = new Date(Calendar.getInstance().getTime().getTime());
+        List<CardObject> cardObjects = new ArrayList<CardObject>();
+
+        List<Medicine> medicines = new ArrayList<Medicine>();
+        if (speacilaty == null && (type == "medicine" || type == null)) {
+            medicines = db.getAllMedicines();
+            for (Medicine medicine : medicines) {
+                if (today.compareTo(medicine.getDate()) == -1) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(medicine.getId());
+                    cardObject.setType("Medicine");
+                    cardObject.setDate(medicine.getDate());
+                    cardObject.setTime(medicine.getTime());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+        }
+
+        List<MedicalAppointment> medicalAppointments = new ArrayList<MedicalAppointment>();
+        if (type == "medicalAppointment" || type == null) {
+            medicalAppointments = db.getAllMedicalAppointments();
+            for (MedicalAppointment appointment : medicalAppointments) {
+                if (today.compareTo(appointment.getDate()) == -1 && (speacilaty == null || speacilaty.equals(appointment.getSpecialty()))) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(appointment.getId());
+                    cardObject.setType("MedicalAppointment");
+                    cardObject.setDate(appointment.getDate());
+                    cardObject.setTime(appointment.getTime());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+        }
 
         //Ordena o array a partir da data e hora de forma decrescente
-        Collections.sort(medicalAppointments, new Comparator<MedicalAppointment>() {
+        Collections.sort(cardObjects, new Comparator<CardObject>() {
             @Override
-            public int compare(MedicalAppointment m1, MedicalAppointment m2) {
-                if (m1.getDate().compareTo(m2.getDate()) > 0){
+            public int compare(CardObject o1, CardObject o2) {
+                if (o1.getDate().compareTo(o2.getDate()) > 0){
                     return -1;
                 }
-                else if (m1.getDate().compareTo(m2.getDate()) == 0){
-                    if (m1.getTime().compareTo(m2.getTime()) > 0){
+                else if (o1.getDate().compareTo(o2.getDate()) == 0){
+                    if (o1.getTime().compareTo(o2.getTime()) > 0){
                         return - 1;
                     }
-                    if (m1.getTime().compareTo(m2.getTime()) < 0){
+                    if (o1.getTime().compareTo(o2.getTime()) < 0){
                         return 1;
                     }
-                    if (m1.getTime().compareTo(m2.getTime()) == 0){
+                    if (o1.getTime().compareTo(o2.getTime()) == 0){
                         return 0;
                     }
                 }
@@ -81,66 +211,143 @@ public class FutureFragment extends Fragment {
             }
         });
 
-        for(MedicalAppointment appointment : medicalAppointments){
-            Date today = new Date(Calendar.getInstance().getTime().getTime());
-            if (today.compareTo(appointment.getDate()) == -1){
-                CardView card = new CardView(context);
+        for(CardObject obj : cardObjects){
+            CardView card = new CardView(context);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.setMargins(50,50,50, 50);
-                card.setLayoutParams(params);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(50,50,50, 50);
+            card.setLayoutParams(params);
 
-                card.setRadius(9);
-                card.setContentPadding(20, 15, 20, 15);
-                card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
-                card.setMaxCardElevation(15);
-                card.setCardElevation(9);
+            card.setRadius(9);
+            card.setContentPadding(20, 15, 20, 15);
+            card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
+            card.setMaxCardElevation(15);
+            card.setCardElevation(9);
 
-                LinearLayout innerLayout = new LinearLayout(context);
-                innerLayout.setLayoutParams(params);
-                innerLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout innerLayout = new LinearLayout(context);
+            innerLayout.setLayoutParams(params);
+            innerLayout.setOrientation(LinearLayout.VERTICAL);
 
-                TextView title = new TextView(context);
-                String titleText =  "<b>Consulta</b> ";
-                title.setText(Html.fromHtml(titleText));
-                title.setTextSize(15);
-                title.setPadding(0,0,0,20);
-                innerLayout.addView(title);
+            String titleText = null;
+            String dateText = null;
+            String specialtyText = null;
+            String timeText = null;
+            String nameText = null;
+            String durationText = null;
+            String frequencyText = null;
+            String medicineTypeText = null;
+            String dosageText = null;
+            String commentsText = null;
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            if (obj.getType() == "Medicine") {
+                titleText =  "<b>Remédio</b> ";
 
 
-                if (appointment.getSpecialty() != "Selecione"){ //por algum motivo esse if não tá funcionando
-                    TextView specialty = new TextView(context);
-                    String specialtyText =  "<b>Especialidade: </b> " + appointment.getSpecialty();
-                    specialty.setText(Html.fromHtml(specialtyText));
-                    innerLayout.addView(specialty);
+                Medicine medicine = null;
+                for (Medicine m : medicines){
+                    if (m.getId() == obj.getId()){
+                        medicine = m;
+                        break;
+                    }
                 }
 
-                TextView date = new TextView(context);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String dateText =  "<b>Data: </b> " + dateFormat.format(appointment.getDate());
-                date.setText(Html.fromHtml(dateText));
-                innerLayout.addView(date);
+                if (medicine.getName() != null && medicine.getName().length() != 0) {
+                    nameText = "<b>Name: </b> " + medicine.getName();
+                }
+                dateText =  "<b>Data: </b> " + dateFormat.format(medicine.getDate());
+                timeText =  "<b>Hora: </b> " + timeFormat.format(medicine.getTime());
+                if (medicine.getDuration() > 0) {
+                    durationText = "<b>Duração: </b> " + medicine.getDuration() + " dias";
+                } else if (medicine.getDuration() == 0 ){
+                    durationText = "<b>Duração: </b> ininterrupto";
+                }
+                if (medicine.getFrequency() != -1) {
+                    frequencyText = "<b>Frequência: </b>" + medicine.getFrequency() + " em " + medicine.getFrequency() + " " + medicine.getFrequencyUnity();
+                }
+                if (medicine.getType() != null && medicine.getType().length() != 0) {
+                    medicineTypeText = "<b>Tipo: </b> " + medicine.getType();
+                }
+                if (medicine.getDosage() != null && medicine.getDosage().length() != 0) {
+                    dosageText = "<b>Dosagem: </b> " + medicine.getDosage();
+                }
+                if (medicine.getComments() != null && medicine.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + medicine.getComments();
+                }
+            } else if (obj.getType() == "MedicalAppointment") {
+                titleText = "<b>Consulta</b> ";
 
-                TextView time = new TextView(context);
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                String timeText =  "<b>Hora: </b> " + timeFormat.format(appointment.getTime());
-                time.setText(Html.fromHtml(timeText));
-                innerLayout.addView(time);
+                MedicalAppointment medicalAppointment = null;
+                for (MedicalAppointment a : medicalAppointments){
+                    if (a.getId() == obj.getId()){
+                        medicalAppointment = a;
+                        break;
+                    }
+                }
 
+                if (medicalAppointment.getSpecialty() != null && medicalAppointment.getSpecialty().length() != 0) {
+                    specialtyText = "<b>Especialidade: </b> " + medicalAppointment.getSpecialty();
+                }
+                dateText =  "<b>Data: </b> " + dateFormat.format(medicalAppointment.getDate());
+                timeText =  "<b>Hora: </b> " + timeFormat.format(medicalAppointment.getTime());
+                if (medicalAppointment.getComments() != null && medicalAppointment.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + medicalAppointment.getComments();
+                }
+            }
+
+            TextView title = new TextView(context);
+            title.setText(Html.fromHtml(titleText));
+            title.setTextSize(15);
+            title.setPadding(0,0,0,20);
+            innerLayout.addView(title);
+
+            if(obj.getType() == "MedicalAppointment" && specialtyText != null){
+                TextView specialty = new TextView(context);
+                specialty.setText(Html.fromHtml(specialtyText));
+                innerLayout.addView(specialty);
+            }
+
+            TextView date = new TextView(context);
+            date.setText(Html.fromHtml(dateText));
+            innerLayout.addView(date);
+
+            TextView time = new TextView(context);
+            time.setText(Html.fromHtml(timeText));
+            innerLayout.addView(time);
+
+            if(obj.getType() == "Medicine" && durationText != null) {
+                TextView duration = new TextView(context);
+                duration.setText(Html.fromHtml(durationText));
+                innerLayout.addView(duration);
+            }
+            if(obj.getType() == "Medicine" && frequencyText != null) {
+                TextView frequency = new TextView(context);
+                frequency.setText(Html.fromHtml(frequencyText));
+                innerLayout.addView(frequency);
+            }
+            if(obj.getType() == "Medicine" && medicineTypeText != null) {
+                TextView medicineType = new TextView(context);
+                medicineType.setText(Html.fromHtml(medicineTypeText));
+                innerLayout.addView(medicineType);
+            }
+            if(obj.getType() == "Medicine" && dosageText != null) {
+                TextView dosage = new TextView(context);
+                dosage.setText(Html.fromHtml(dosageText));
+                innerLayout.addView(dosage);
+            }
+
+            if (commentsText != null) {
                 TextView comments = new TextView(context);
-                String commentsText =  "<b>Comentários: </b> " + appointment.getComments();
                 comments.setText(Html.fromHtml(commentsText));
                 innerLayout.addView(comments);
-
-                card.addView(innerLayout);
-                layout.addView(card);
             }
-        }
 
-        return view;
+            card.addView(innerLayout);
+            layout.addView(card);
+        }
     }
 
     public void goToAddPage(){

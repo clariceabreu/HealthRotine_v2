@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -260,7 +261,7 @@ public class HistoricFragment extends Fragment {
                 }
 
                 if (medicine.getName() != null && medicine.getName().length() != 0) {
-                    nameText = "<b>Name: </b> " + medicine.getName();
+                    nameText = "<b>Nome: </b> " + medicine.getName();
                 }
                 dateText =  "<b>Data: </b> " + dateFormat.format(medicine.getDate());
                 timeText =  "<b>Hora: </b> " + timeFormat.format(medicine.getTime());
@@ -269,7 +270,7 @@ public class HistoricFragment extends Fragment {
                 } else if (medicine.getDuration() == 0 ){
                     durationText = "<b>Duração: </b> ininterrupto";
                 }
-                if (medicine.getFrequency() != -1) {
+                if (medicine.getFrequency() != -1 && medicine.getFrequency() != 0) {
                     frequencyText = "<b>Frequência: </b>" + medicine.getFrequency() + " em " + medicine.getFrequency() + " " + medicine.getFrequencyUnity();
                 }
                 if (medicine.getType() != null && medicine.getType().length() != 0) {
@@ -314,6 +315,12 @@ public class HistoricFragment extends Fragment {
                 innerLayout.addView(specialty);
             }
 
+            if (obj.getType() == "Medicine" && nameText != null){
+                TextView name = new TextView(context);
+                name.setText(Html.fromHtml(nameText));
+                innerLayout.addView(name);
+            }
+
             TextView date = new TextView(context);
             date.setText(Html.fromHtml(dateText));
             innerLayout.addView(date);
@@ -322,26 +329,29 @@ public class HistoricFragment extends Fragment {
             time.setText(Html.fromHtml(timeText));
             innerLayout.addView(time);
 
-            if(obj.getType() == "Medicine" && durationText != null) {
-                TextView duration = new TextView(context);
-                duration.setText(Html.fromHtml(durationText));
-                innerLayout.addView(duration);
+            if (obj.getType() == "Medicine"){
+                if (durationText != null) {
+                    TextView duration = new TextView(context);
+                    duration.setText(Html.fromHtml(durationText));
+                    innerLayout.addView(duration);
+                }
+                if(frequencyText != null) {
+                    TextView frequency = new TextView(context);
+                    frequency.setText(Html.fromHtml(frequencyText));
+                    innerLayout.addView(frequency);
+                }
+                if (medicineTypeText != null) {
+                    TextView medicineType = new TextView(context);
+                    medicineType.setText(Html.fromHtml(medicineTypeText));
+                    innerLayout.addView(medicineType);
+                }
+                if (dosageText != null) {
+                    TextView dosage = new TextView(context);
+                    dosage.setText(Html.fromHtml(dosageText));
+                    innerLayout.addView(dosage);
+                }
             }
-            if(obj.getType() == "Medicine" && frequencyText != null) {
-                TextView frequency = new TextView(context);
-                frequency.setText(Html.fromHtml(frequencyText));
-                innerLayout.addView(frequency);
-            }
-            if(obj.getType() == "Medicine" && medicineTypeText != null) {
-                TextView medicineType = new TextView(context);
-                medicineType.setText(Html.fromHtml(medicineTypeText));
-                innerLayout.addView(medicineType);
-            }
-            if(obj.getType() == "Medicine" && dosageText != null) {
-                TextView dosage = new TextView(context);
-                dosage.setText(Html.fromHtml(dosageText));
-                innerLayout.addView(dosage);
-            }
+
 
             if (commentsText != null) {
                 TextView comments = new TextView(context);

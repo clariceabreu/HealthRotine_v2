@@ -95,11 +95,7 @@ public class RotineFragment extends Fragment {
         List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
         if (medicalAppointments.size() > 0){
             for (MedicalAppointment medicalAppointment : medicalAppointments){
-
-                System.out.println(medicalAppointment.getDate());
-                System.out.println(dateLimitStart.compareTo(medicalAppointment.getDate()) == -1);
-                System.out.println(dateLimitEnd.compareTo(medicalAppointment.getDate()) == 1);
-
+                
                 if (dateLimitStart.compareTo(medicalAppointment.getDate()) == 0){
                     CardObject cardObject = new CardObject();
                     cardObject.setId(medicalAppointment.getId());

@@ -32,8 +32,8 @@ Once the information is registred, it will be stored into one of the application
 It is also possible to filter the events based on their types (e.g., medicines, medical appoitments or both) or their specialties.
 
 # Features to be added in future versions
-* Exams registration
-* Internacionalization (i.e., translate the app to English and Spanish)
+* Exam registration
+* Internationalization (i.e., translate the app to English and Spanish)
 * Events edition
-* Send notification to alert about an uppcoming events
+* Send notification to alert about uppcoming events
 

@@ -7,13 +7,13 @@ The app was developed using Android Studio in Java.
 ## Main features
 The user can register his medical information which will be orginzed as events according to their dates.
 
-* Parameters that can be informed in **medical appointments** registrations:
+* Parameters that can be informed in **medical appointment** registrations:
   * Medical specialty
   * Date
   * Time
   * Comment
 
-* Parameters that can be informed in **medicines** registrations:
+* Parameters that can be informed in **medicine** registrations:
   * Name 
   * Date 
   * Start time
@@ -23,7 +23,7 @@ The user can register his medical information which will be orginzed as events a
   * Dosage
   * Comment
 
-Once the information is regitred, it will be stored into one of the application's three tabs. These tabs are:
+Once the information is registred, it will be stored into one of the application's three tabs. These tabs are:
 * History: contains past events (a medical appointment that happened last year or a medicine that was taken last month, for example)
 * Rotine: contains todays' events (a medicine that has to be taken today or a medical apppointment to attend, for example)
 * Future: cointains future events (medical appointments scheduled for next week or month, for example)

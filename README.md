@@ -1,6 +1,5 @@
 # HealthRotine
-<img src="https://scontent.fbhz8-1.fna.fbcdn.net/v/t1.15752-9/83359375_204864960682542_3023601270658170880_n.png?_nc_cat=100&_nc_ohc=f0ELmhRtBfoAX-1SaUi&_nc_ht=scontent.fbhz8-1.fna&oh=025630377479ba8c3565557e820f51d4&oe=5ED06F97" width="50"/>
-
+<img src="https://raw.githubusercontent.com/clariceabreu/HealthRotine_v2/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="80"/>
 Android application that stores and organizes as users' medical information aiming to empower them regarding their health.
 The app was developed using Android Studio in Java.
 

@@ -8,13 +8,13 @@ The app was developed using Android Studio in Java.
 ## Main features
 Clicking on the + button in the bottom right corner, the user can register his medical information which will be orginzed as events according to their dates.
 
-* Parameters that can be informed in **medical appointment** registrations:
+* Parameters that can be informed in **medical appointment** registration:
   * Medical specialty
   * Date
   * Time
   * Comment
 
-* Parameters that can be informed in **medicine** registrations:
+* Parameters that can be informed in **medicine** registration:
   * Name 
   * Date 
   * Start time

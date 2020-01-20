@@ -28,7 +28,7 @@ Once the information is registred, it will be stored into one of the application
 * Rotine: contains todays' events (e.g., a medicine that has to be taken today or a medical apppointment to attend)
 * Future: cointains future events (e.g., medical appointments scheduled for next week or month)
 
-It is also possible to filter the events based on their types (e.g., medicine, medical appoitments or both) or their specialty.
+It is also possible to filter the events based on their types (e.g., medicines, medical appoitments or both) or their specialties.
 
 # Features to be added in future versions
 * Exams registration

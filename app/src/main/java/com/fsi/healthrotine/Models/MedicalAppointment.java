@@ -3,8 +3,7 @@ package com.fsi.healthrotine.Models;
 import java.util.Date;
 import java.sql.Time;
 
-public class MedicalAppointment {
-    private int id;
+public class MedicalAppointment extends Entity{
 
     private String specialty;
     private Date date;
@@ -27,14 +26,6 @@ public class MedicalAppointment {
         this.date = _date;
         this.time = _time;
         this.comments = _comments;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSpecialty() {

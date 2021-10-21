@@ -344,7 +344,6 @@ public class AddActivity extends AppCompatActivity {
                     medicine.setType(editTextType.getText().toString());
                     medicine.setDosage(editTextDosage.getText().toString());
                     medicine.setComments(editTextComment.getText().toString());
-
                     db.addMedicine(medicine);
 
                     Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)

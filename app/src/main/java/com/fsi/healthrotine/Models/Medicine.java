@@ -2,13 +2,14 @@ package com.fsi.healthrotine.Models;
 
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class Medicine {
-    private int id;
-    private String name;
+import static com.fsi.healthrotine.Models.Helpers.*;
+
+
+public class Medicine extends Entity {
+
     private Date date;
     private Date endDate;
     private Time time;
@@ -18,9 +19,8 @@ public class Medicine {
     private String type; //pills, drops or intravenous
     private String dosage;
     private String comments;
+    private String specialist;
     private List<Date> administrationTimes;
-
-    public Medicine(){}
 
     //constructor to update
     public Medicine(int _id, String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duratiion, String _type, String _dosage, String _comments){
@@ -46,33 +46,8 @@ public class Medicine {
         this.comments = _comments;
     }
 
-    private Date addDays(Date currentDate, int days) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(currentDate);
-        c.add(Calendar.DATE, days);
-        return new Date(c.getTimeInMillis());
-    }
-    private Date addHours(Date currentDate, int hours) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(currentDate);
-        c.add(Calendar.HOUR, hours);
-        return new Date(c.getTimeInMillis());
-    }
+    public Medicine() {
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getDate() {
@@ -107,7 +82,7 @@ public class Medicine {
         this.duration = duratiion;
 
         if (duratiion > 0){
-            this.endDate = this.addDays(this.getDate(), this.getDuration());
+            this.endDate = addDays(this.getDate(), this.getDuration());
         } else {
             this.endDate = new Date(3000 - 1900, 0, 1, 23, 59); //3000-01-01
         }
@@ -124,20 +99,20 @@ public class Medicine {
             if (this.frequencyUnity.equals("horas")) {
                 this.administrationTimes = new ArrayList<Date>();
                 this.administrationTimes.add(this.getDate());
-                Date admTime = this.addHours(this.getDate(),frequency);
+                Date admTime = addHours(this.getDate(),frequency);
 
                 while (admTime.compareTo(this.endDate) == -1){
                     this.administrationTimes.add(admTime);
-                    admTime = this.addHours(admTime, frequency);
+                    admTime = addHours(admTime, frequency);
                 }
 
             } else if (this.frequencyUnity.equals("dias")){
                 this.administrationTimes = new ArrayList<Date>();
-                Date admTime = this.addDays(this.getDate(), frequency);
+                Date admTime = addDays(this.getDate(), frequency);
 
                 while (admTime.compareTo(this.endDate) == -1){
                     this.administrationTimes.add(admTime);
-                    admTime = this.addDays(admTime, frequency);
+                    admTime = addDays(admTime, frequency);
                 }
             }
         }

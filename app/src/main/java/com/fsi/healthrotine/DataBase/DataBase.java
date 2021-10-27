@@ -28,9 +28,6 @@ public class DataBase extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DBNAME = "db_HealthRotine";
 
-    private MedicineTable medicineTable = new MedicineTable();
-    private MedicalAppointmentTable medicalAppointmentTable = new MedicalAppointmentTable();
-
     public DataBase(Context context) {
         super(context, DBNAME, null, VERSION);
     }
@@ -60,46 +57,9 @@ public class DataBase extends SQLiteOpenHelper {
         db.insert(table, null, values);
         db.close();
     }
-
-    public void addMedicalAppointment(MedicalAppointment medicalAppointment){
-        insertOnTable(TB_MEDICALAPPOINTMENT, this.medicalAppointmentTable.add(medicalAppointment));
-    }
-    public void addMedicine(Medicine medicine){
-        insertOnTable(TB_MEDICINE, this.medicineTable.add(medicine));
-    }
-    public void deleteMedicalAppointment(MedicalAppointment medicalAppointment){
-        deleteFromTable(TB_MEDICALAPPOINTMENT, medicalAppointment.getId());
-    }
-
-    public void deleteMedicine(Medicine medicine){
-        deleteFromTable(TB_MEDICINE, medicine.getId());
-    }
-
-    public MedicalAppointment getMedicalAppointment(MedicalAppointment _medicalAppointment){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TB_MEDICALAPPOINTMENT, new String[] {ID, SPECIALTY, DATE, TIME, COMMENTS},
-                ID + " = ?",
-                new String[] {String.valueOf(_medicalAppointment.getId())}, null, null, null, null);
-        return this.medicalAppointmentTable.getOne(cursor);
-
-    }
-
-    public List<MedicalAppointment> getAllMedicalAppointments(){
-        return this.medicalAppointmentTable.getAll(getTableCursor(TB_MEDICALAPPOINTMENT));
-    }
-
-    public List<Medicine> getAllMedicines(){
-        return this.medicineTable.getAll(getTableCursor(TB_MEDICINE));
-    }
-
-    public void updateMedicalAppointment(MedicalAppointment medicalAppointment){
+    public void updateTable(String table, ContentValues values, int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(TB_MEDICALAPPOINTMENT, this.medicalAppointmentTable.update(medicalAppointment), ID + " = ? ", new String[]{String.valueOf(medicalAppointment.getId())});
-    }
-
-    public void updateMedicine(Medicine medicine){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.update(TB_MEDICINE, this.medicineTable.update(medicine), ID + " = ? ", new String[]{String.valueOf(medicine.getId())});
-
+        db.update(table, values, ID + " = ? ", new String[]{String.valueOf(id)});
+        db.close();
     }
 }

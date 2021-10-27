@@ -1,10 +1,27 @@
 package com.fsi.healthrotine.Models;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.ADMINISTRATION_TIMES;
+import static com.fsi.healthrotine.DataBase.Columns.COMMENTS;
+import static com.fsi.healthrotine.DataBase.Columns.DATE;
+import static com.fsi.healthrotine.DataBase.Columns.DOSAGE;
+import static com.fsi.healthrotine.DataBase.Columns.DURATION;
+import static com.fsi.healthrotine.DataBase.Columns.END_DATE;
+import static com.fsi.healthrotine.DataBase.Columns.FREQUENCY;
+import static com.fsi.healthrotine.DataBase.Columns.FREQUENCY_UNITY;
+import static com.fsi.healthrotine.DataBase.Columns.NAME;
+import static com.fsi.healthrotine.DataBase.Columns.TIME;
+import static com.fsi.healthrotine.DataBase.Columns.TYPE;
+import static com.fsi.healthrotine.DataBase.Helpers.convertArrayToString;
 import static com.fsi.healthrotine.Models.Helpers.*;
 
 
@@ -156,5 +173,66 @@ public class Medicine extends Entity {
 
     public void setAdministrationTimes(List<Date> administrationTimes) {
         this.administrationTimes = administrationTimes;
+    }
+
+    public ContentValues getValues() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+        ContentValues values = new ContentValues();
+        values.put(NAME, getName());
+        values.put(DATE, dateFormat.format(getDate()));
+        if (getEndDate() != null){
+            values.put(END_DATE, dateFormat.format(getEndDate()));
+        }
+        values.put(TIME, timeFormat.format(getTime()));
+        values.put(DURATION, getDuration());
+        values.put(FREQUENCY, getFrequency());
+        values.put(FREQUENCY_UNITY, getFrequencyUnity());
+        values.put(TYPE, getType());
+        values.put(DOSAGE, getDosage());
+        values.put(ADMINISTRATION_TIMES, convertArrayToString(getAdministrationTimes()));
+        values.put(COMMENTS, getComments());
+
+        return values;
+    }
+    public static List<Medicine> getAll(Cursor cursor) {
+
+        List<Medicine> medicines = new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                try {
+                    Medicine medicine = new Medicine();
+                    medicine.setId(Integer.parseInt(cursor.getString(0)));
+                    medicine.setName(cursor.getString(1));
+
+                    Date date = new Date(dateFormat.parse(cursor.getString(2)).getTime());
+                    if (cursor.getString(3) != null) {
+                        Date endDate = new Date(dateFormat.parse(cursor.getString(3)).getTime());
+                        medicine.setEndDate(endDate);
+                    }
+                    Time time = new Time(timeFormat.parse(cursor.getString(4)).getTime());
+
+                    medicine.setDate(date);
+                    medicine.setTime(time);
+                    medicine.setDuration(Integer.parseInt(cursor.getString(5)));
+                    medicine.setFrequencyUnity(cursor.getString(7));
+                    medicine.setFrequency(Integer.parseInt(cursor.getString(6)));
+                    medicine.setType(cursor.getString(8));
+                    medicine.setDosage(cursor.getString(9));
+                    medicine.setComments(cursor.getString(11));
+                    medicines.add(medicine);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        return medicines;
     }
 }

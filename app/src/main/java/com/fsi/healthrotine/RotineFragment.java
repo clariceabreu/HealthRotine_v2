@@ -30,6 +30,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICALAPPOINTMENT;
+import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +72,7 @@ public class RotineFragment extends Fragment {
         Date dateLimitStart = new Date(year - 1900, month, day, 00, 00, 00);
         Date dateLimitEnd = new Date(year - 1900, month, day, 23, 59, 59);
 
-        List<Medicine> medicines = db.getAllMedicines();
+        List<Medicine> medicines = Medicine.getAll(db.getTableCursor(TB_MEDICINE));
         for (Medicine medicine : medicines) {
             List<Date> administrationTimes = medicine.getAdministrationTimes();
 
@@ -92,7 +95,7 @@ public class RotineFragment extends Fragment {
         }
 
 
-        List<MedicalAppointment> medicalAppointments = db.getAllMedicalAppointments();
+        List<MedicalAppointment> medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT));;
         if (medicalAppointments.size() > 0){
             for (MedicalAppointment medicalAppointment : medicalAppointments){
                 

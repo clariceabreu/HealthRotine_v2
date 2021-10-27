@@ -33,6 +33,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.*;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -159,7 +162,8 @@ public class FutureFragment extends Fragment {
 
         List<Medicine> medicines = new ArrayList<Medicine>();
         if (speacilaty == null && (type == "medicine" || type == null)) {
-            medicines = db.getAllMedicines();
+            medicines = Medicine.getAll(db.getTableCursor(TB_MEDICINE));
+//            medicines = db.getAllMedicines();
             for (Medicine medicine : medicines) {
                 if (today.compareTo(medicine.getDate()) == -1) {
                     CardObject cardObject = new CardObject();
@@ -175,7 +179,8 @@ public class FutureFragment extends Fragment {
 
         List<MedicalAppointment> medicalAppointments = new ArrayList<MedicalAppointment>();
         if (type == "medicalAppointment" || type == null) {
-            medicalAppointments = db.getAllMedicalAppointments();
+//            medicalAppointments = db.getAllMedicalAppointments();
+              medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT));
             for (MedicalAppointment appointment : medicalAppointments) {
                 if (today.compareTo(appointment.getDate()) == -1 && (speacilaty == null || speacilaty.equals(appointment.getSpecialty()))) {
                     CardObject cardObject = new CardObject();

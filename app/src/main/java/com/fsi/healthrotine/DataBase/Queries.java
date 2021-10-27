@@ -21,4 +21,16 @@ public class Queries {
             + DATE + " TEXT, "
             + TIME + " TEXT, "
             + COMMENTS + " TEXT)";
+    public static final String
+             PATIENT_QUERY = "CREATE TABLE tb_patient ("
+            + ID + " TEXT, "
+            + NAME + " TEXT, "
+            + AGE + " TEXT, "
+            + BLOOD_TYPE + " TEXT, "
+            + WEIGHT + " TEXT, "
+            + HEIGHT + " TEXT, "
+            + ALLERGIES + " TEXT, "
+            + SUS_CARD + " TEXT, "
+            + HEALTH_INSURANCE + " TEXT, "
+            + EMERGENCY_CONTACTS + " TEXT)";
 }

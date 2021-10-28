@@ -36,6 +36,8 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(MEDICALAPPOINTMENT_QUERY);
         db.execSQL(MEDICINE_QUERY);
+        db.execSQL(SPECIALIST_QUERY);
+        db.execSQL(SPECIALTY_QUERY);
     }
 
     @Override
@@ -50,6 +52,11 @@ public class DataBase extends SQLiteOpenHelper {
     public Cursor getTableCursor(String table){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery( "SELECT * FROM " + table, null);
+        return cursor;
+    }
+    public Cursor getTableCursorForId(String table, int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT * FROM " + table + " WHERE " + ID + " = " + id, null);
         return cursor;
     }
     public void insertOnTable(String table, ContentValues values){

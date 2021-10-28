@@ -18,6 +18,7 @@ import static com.fsi.healthrotine.DataBase.Columns.TIME;
 public class MedicalAppointment extends Entity{
 
     private String specialty;
+    private Specialist specialist;
     private Date date;
     private Time time;
     private String comments;
@@ -25,16 +26,18 @@ public class MedicalAppointment extends Entity{
     public MedicalAppointment(){}
 
     //constructor to update
-    public MedicalAppointment(int _id, String _specialty, Date _date, Time _time, String _comments){
+    public MedicalAppointment(int _id, String _specialty, Date _date, Time _time, String _comments, Specialist _specialist){
         this.id = _id;
         this.specialty = _specialty;
+        this.specialist = _specialist;
         this.date = _date;
         this.time = _time;
         this.comments = _comments;
     }
 
-    public MedicalAppointment(String _specialty, Date _date, Time _time, String _comments){
+    public MedicalAppointment(String _specialty, Date _date, Time _time, String _comments, Specialist _specialist){
         this.specialty = _specialty;
+        this.specialist = _specialist;
         this.date = _date;
         this.time = _time;
         this.comments = _comments;
@@ -46,6 +49,14 @@ public class MedicalAppointment extends Entity{
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 
     public Date getDate() {
@@ -96,7 +107,7 @@ public class MedicalAppointment extends Entity{
             Time time = new Time(timeFormat.parse(cursor.getString(3)).getTime());
 
             MedicalAppointment medicalAppointment = new MedicalAppointment(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
-                    date, time, cursor.getString(4));
+                    date, time, cursor.getString(4), null);
             return medicalAppointment;
         } catch (ParseException e) {
             e.printStackTrace();

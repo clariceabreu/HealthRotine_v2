@@ -3,6 +3,8 @@ package com.fsi.healthrotine.DataBase;
 public class Columns {
     public static final String TB_MEDICINE = "tb_medicine";
     public static final String TB_MEDICALAPPOINTMENT = "tb_medicalAppointment";
+    public static final String TB_SPECIALIST = "tb_specialist";
+    public static final String TB_SPECIALTY = "tb_specialty";
 
 
     public static final String ID = "id";
@@ -18,6 +20,8 @@ public class Columns {
     public static final String TIME = "time";
     public static final String COMMENTS = "comments";
     public static final String SPECIALTY = "specialty";
-    public static final String SPECIALIST= "specialist";
+    public static final String SPECIALTY_ID = "specialty_id";
+    public static final String SPECIALIST_ID = "specialist_id";
+    public static final String CERTIFICATION = "certification";
 
 }

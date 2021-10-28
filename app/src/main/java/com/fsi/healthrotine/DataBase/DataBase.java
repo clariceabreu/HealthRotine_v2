@@ -36,6 +36,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(MEDICALAPPOINTMENT_QUERY);
         db.execSQL(MEDICINE_QUERY);
+        db.execSQL(PATIENT_QUERY);
     }
 
     @Override

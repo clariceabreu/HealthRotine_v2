@@ -1,9 +1,17 @@
 package com.fsi.healthrotine.Models;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 
 import static com.fsi.healthrotine.DataBase.Columns.*;
+
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Patient extends Entity{
 
@@ -15,13 +23,13 @@ public class Patient extends Entity{
     private String allergies;
     private int sus_card;
     private int health_insurance_card;
-    private int emergency_contacts;
+    private String emergency_contacts;
 
 
     public Patient(){}
 
     //constructor to update
-    public Patient(int _id, String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_isurance_card, int _emergency_contacts){
+    public Patient(int _id, String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _emergency_contacts){
         this.id = _id;
         this.age = _age;
         this.blood_type = _blood_type;
@@ -29,18 +37,18 @@ public class Patient extends Entity{
         this.height = _height;
         this.allergies = _allergies;
         this.sus_card = _sus_card;
-        this.health_insurance_card = _health_isurance_card;
+        this.health_insurance_card = _health_insurance_card;
         this.emergency_contacts = _emergency_contacts;
     }
 
-    public Patient(String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_isurance_card, int _emergency_contacts){
+    public Patient(String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _emergency_contacts){
         this.age = _age;
         this.blood_type = _blood_type;
         this.weight = _weight;
         this.height = _height;
         this.allergies = _allergies;
         this.sus_card = _sus_card;
-        this.health_insurance_card = _health_isurance_card;
+        this.health_insurance_card = _health_insurance_card;
         this.emergency_contacts = _emergency_contacts;
     }
 
@@ -99,11 +107,11 @@ public class Patient extends Entity{
     public void setHealth_insurance_card(int health_insurance_card) {
         this.health_insurance_card = health_insurance_card; }
 
-    public int getEmergency_contacts() {
+    public String getEmergency_contacts() {
         return emergency_contacts;
     }
 
-    public void setEmergency_contacts(int emergency_contacts) {
+    public void setEmergency_contacts(String emergency_contacts) {
         this.emergency_contacts = emergency_contacts;
     }
 
@@ -121,5 +129,28 @@ public class Patient extends Entity{
         values.put(HEALTH_INSURANCE, getHealth_insurance_card());
         values.put(EMERGENCY_CONTACTS, getEmergency_contacts());
         return values;
+    }
+
+    public static List<Patient> getAll(Cursor cursor) {
+
+        List<Patient> patients = new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do {
+                    Patient patient = new Patient();
+
+                    patient.setId(Integer.parseInt(cursor.getString(0)));
+                    patient.setName(cursor.getString(1));
+                    patient.setAge(Integer.parseInt(cursor.getString(2)));
+                    patient.setBlood_type(cursor.getString(3));
+                    patient.setWeight(Integer.parseInt(cursor.getString(4)));
+                    patient.setHeight(Integer.parseInt(cursor.getString(5)));
+                    patient.setAllergies(cursor.getString(6));
+                    patient.setSus_card(Integer.parseInt(cursor.getString(7)));
+                    patient.setHealth_insurance_card(Integer.parseInt(cursor.getString(8)));
+                    patient.setEmergency_contacts((cursor.getString(9)));
+            } while (cursor.moveToNext());
+        }
+
+        return patients;
     }
 }

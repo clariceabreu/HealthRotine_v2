@@ -21,8 +21,8 @@ public class Queries {
             + DATE + " TEXT, "
             + TIME + " TEXT, "
             + COMMENTS + " TEXT)";
-    public static final String
-             PATIENT_QUERY = "CREATE TABLE tb_patient ("
+    public static final String PATIENT_QUERY =
+            "CREATE TABLE " + TB_PATIENT + "("
             + ID + " TEXT, "
             + NAME + " TEXT, "
             + AGE + " TEXT, "

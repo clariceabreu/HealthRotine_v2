@@ -4,11 +4,11 @@ public class Columns {
     public static final String TB_MEDICINE = "tb_medicine";
     public static final String TB_MEDICALAPPOINTMENT = "tb_medicalAppointment";
     public static final String TB_PATIENT = "tb_patient";
-
+    public static final String TB_VACCINE = "tb_vaccine";
 
     public static final String ID = "id";
     public static final String NAME = "name";
-    public  static final String DATE = "date";
+    public static final String DATE = "date";
     public static final String END_DATE = "endDate";
     public static final String DURATION = "duration";
     public static final String FREQUENCY = "frequency";
@@ -28,4 +28,7 @@ public class Columns {
     public static final String SUS_CARD = "sus_card";
     public static final String HEALTH_INSURANCE = "health_insurance";
     public static final String EMERGENCY_CONTACTS = "emergency_contacts";
+    public static final String MANUFACTURER = "manufacturer";
+    public static final String BATCH = "batch";
+    public static final String PLACE = "place";
 }

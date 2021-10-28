@@ -37,6 +37,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(MEDICALAPPOINTMENT_QUERY);
         db.execSQL(MEDICINE_QUERY);
         db.execSQL(PATIENT_QUERY);
+        db.execSQL(VACCINE_QUERY);
     }
 
     @Override

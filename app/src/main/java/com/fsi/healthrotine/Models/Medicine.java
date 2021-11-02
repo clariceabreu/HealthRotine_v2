@@ -19,6 +19,7 @@ import static com.fsi.healthrotine.DataBase.Columns.END_DATE;
 import static com.fsi.healthrotine.DataBase.Columns.FREQUENCY;
 import static com.fsi.healthrotine.DataBase.Columns.FREQUENCY_UNITY;
 import static com.fsi.healthrotine.DataBase.Columns.NAME;
+import static com.fsi.healthrotine.DataBase.Columns.SPECIALIST;
 import static com.fsi.healthrotine.DataBase.Columns.TIME;
 import static com.fsi.healthrotine.DataBase.Columns.TYPE;
 import static com.fsi.healthrotine.DataBase.Helpers.convertArrayToString;
@@ -40,19 +41,8 @@ public class Medicine extends Entity {
     private List<Date> administrationTimes;
 
     //constructor to update
-    public Medicine(int _id, String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duratiion, String _type, String _dosage, String _comments){
+    public Medicine(int _id, String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments, String _specialist){
         this.id = _id;
-        this.date = _startDate;
-        this.duration = _duratiion;
-        this.time = _startTime;
-        this.frequency = _frequency;
-        this.frequencyUnity = _frequencyUnity;
-        this.type = _type;
-        this.dosage = _dosage;
-        this.comments = _comments;
-    }
-
-    public Medicine(String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments){
         this.date = _startDate;
         this.duration = _duration;
         this.time = _startTime;
@@ -61,6 +51,19 @@ public class Medicine extends Entity {
         this.type = _type;
         this.dosage = _dosage;
         this.comments = _comments;
+        this.specialist = _specialist;
+    }
+
+    public Medicine(String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments, String _specialist){
+        this.date = _startDate;
+        this.duration = _duration;
+        this.time = _startTime;
+        this.frequency = _frequency;
+        this.frequencyUnity = _frequencyUnity;
+        this.type = _type;
+        this.dosage = _dosage;
+        this.comments = _comments;
+        this.specialist = _specialist;
     }
 
     public Medicine() {
@@ -175,6 +178,14 @@ public class Medicine extends Entity {
         this.administrationTimes = administrationTimes;
     }
 
+    public String getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(String specialist) {
+        this.specialist = specialist;
+    }
+
     public ContentValues getValues() {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -194,9 +205,10 @@ public class Medicine extends Entity {
         values.put(DOSAGE, getDosage());
         values.put(ADMINISTRATION_TIMES, convertArrayToString(getAdministrationTimes()));
         values.put(COMMENTS, getComments());
-
+        values.put(SPECIALIST, getSpecialist());
         return values;
     }
+
     public static List<Medicine> getAll(Cursor cursor) {
 
         List<Medicine> medicines = new ArrayList<>();
@@ -224,15 +236,14 @@ public class Medicine extends Entity {
                     medicine.setType(cursor.getString(8));
                     medicine.setDosage(cursor.getString(9));
                     medicine.setComments(cursor.getString(11));
+                    medicine.setSpecialist(cursor.getString(12));
                     medicines.add(medicine);
                 } catch (ParseException e) {
                     e.printStackTrace();
                     return null;
                 }
-
             } while (cursor.moveToNext());
         }
-
         return medicines;
     }
 }

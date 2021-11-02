@@ -4,7 +4,6 @@ public class Columns {
     public static final String TB_MEDICINE = "tb_medicine";
     public static final String TB_MEDICALAPPOINTMENT = "tb_medicalAppointment";
 
-
     public static final String ID = "id";
     public static final String NAME = "name";
     public  static final String DATE = "date";
@@ -18,6 +17,5 @@ public class Columns {
     public static final String TIME = "time";
     public static final String COMMENTS = "comments";
     public static final String SPECIALTY = "specialty";
-    public static final String SPECIALIST= "specialist";
-
+    public static final String SPECIALIST = "specialist";
 }

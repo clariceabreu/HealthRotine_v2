@@ -14,6 +14,7 @@ public class Queries {
             + TYPE+ " TEXT, "
             + DOSAGE + " TEXT, "
             + ADMINISTRATION_TIMES + " TEXT, "
+            + SPECIALIST + " TEXT, "
             + COMMENTS + " TEXT)";
     public static final String MEDICALAPPOINTMENT_QUERY = "CREATE TABLE " + TB_MEDICALAPPOINTMENT + "("
             + ID + " INTEGER PRIMARY KEY, "

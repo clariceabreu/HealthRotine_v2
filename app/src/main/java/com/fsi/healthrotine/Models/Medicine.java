@@ -36,11 +36,11 @@ public class Medicine extends Entity {
     private String type; //pills, drops or intravenous
     private String dosage;
     private String comments;
-    private String specialist;
+    private Specialist specialist;
     private List<Date> administrationTimes;
 
     //constructor to update
-    public Medicine(int _id, String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duratiion, String _type, String _dosage, String _comments){
+    public Medicine(int _id, String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duratiion, String _type, String _dosage, String _comments, Specialist _specialist){
         this.id = _id;
         this.date = _startDate;
         this.duration = _duratiion;
@@ -50,9 +50,10 @@ public class Medicine extends Entity {
         this.type = _type;
         this.dosage = _dosage;
         this.comments = _comments;
+        this.specialist = _specialist;
     }
 
-    public Medicine(String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments){
+    public Medicine(String name, Date _startDate, Time _startTime, int _frequency, String _frequencyUnity, int _duration, String _type, String _dosage, String _comments, Specialist _specialist){
         this.date = _startDate;
         this.duration = _duration;
         this.time = _startTime;
@@ -61,6 +62,7 @@ public class Medicine extends Entity {
         this.type = _type;
         this.dosage = _dosage;
         this.comments = _comments;
+        this.specialist = _specialist;
     }
 
     public Medicine() {
@@ -112,7 +114,7 @@ public class Medicine extends Entity {
     public void setFrequency(int frequency) {
         this.frequency = frequency;
 
-        if (frequency != -1) {
+        if (frequency != -1 && this.frequencyUnity != null) {
             if (this.frequencyUnity.equals("horas")) {
                 this.administrationTimes = new ArrayList<Date>();
                 this.administrationTimes.add(this.getDate());
@@ -169,6 +171,14 @@ public class Medicine extends Entity {
 
     public List<Date> getAdministrationTimes() {
         return administrationTimes;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 
     public void setAdministrationTimes(List<Date> administrationTimes) {

@@ -15,12 +15,21 @@ public class Queries {
             + DOSAGE + " TEXT, "
             + ADMINISTRATION_TIMES + " TEXT, "
             + COMMENTS + " TEXT)";
+
     public static final String MEDICALAPPOINTMENT_QUERY = "CREATE TABLE " + TB_MEDICALAPPOINTMENT + "("
             + ID + " INTEGER PRIMARY KEY, "
             + SPECIALTY + " TEXT, "
             + DATE + " TEXT, "
             + TIME + " TEXT, "
-            + COMMENTS + " TEXT)";
+            + COMMENTS + " TEXT, "
+            + SPECIALIST_ID + " INTEGER DEFAULT 0)";
+
+    public static final String SPECIALIST_QUERY = "CREATE TABlE " + TB_SPECIALIST + "("
+            + ID + " INTEGER PRIMARY KEY, "
+            + NAME + " TEXT, "
+            + SPECIALTY + " TEXT, "
+            + CERTIFICATION + " TEXT)";
+
     public static final String PATIENT_QUERY =
             "CREATE TABLE " + TB_PATIENT + "("
             + ID + " TEXT, "
@@ -34,7 +43,7 @@ public class Queries {
             + HEALTH_INSURANCE + " TEXT, "
             + EMERGENCY_CONTACTS + " TEXT)";
 
-        public static final String VACCINE_QUERY = "CREATE TABLE " + TB_VACCINE + "("
+    public static final String VACCINE_QUERY = "CREATE TABLE " + TB_VACCINE + "("
                 + ID + " INTEGER PRIMARY KEY, "
                 + NAME + " TEXT, "
                 + DATE + " TEXT, "

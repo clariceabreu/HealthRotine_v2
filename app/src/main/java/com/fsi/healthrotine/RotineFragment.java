@@ -95,7 +95,7 @@ public class RotineFragment extends Fragment {
         }
 
 
-        List<MedicalAppointment> medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT));;
+        List<MedicalAppointment> medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT), db);;
         if (medicalAppointments.size() > 0){
             for (MedicalAppointment medicalAppointment : medicalAppointments){
                 

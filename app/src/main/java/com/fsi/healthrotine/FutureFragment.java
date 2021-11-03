@@ -180,7 +180,7 @@ public class FutureFragment extends Fragment {
         List<MedicalAppointment> medicalAppointments = new ArrayList<MedicalAppointment>();
         if (type == "medicalAppointment" || type == null) {
 //            medicalAppointments = db.getAllMedicalAppointments();
-              medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT));
+              medicalAppointments = MedicalAppointment.getAll(db.getTableCursor(TB_MEDICALAPPOINTMENT), db);
             for (MedicalAppointment appointment : medicalAppointments) {
                 if (today.compareTo(appointment.getDate()) == -1 && (speacilaty == null || speacilaty.equals(appointment.getSpecialty()))) {
                     CardObject cardObject = new CardObject();

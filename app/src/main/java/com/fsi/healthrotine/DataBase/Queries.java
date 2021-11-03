@@ -30,4 +30,25 @@ public class Queries {
             + SPECIALTY + " TEXT, "
             + CERTIFICATION + " TEXT)";
 
+    public static final String PATIENT_QUERY =
+            "CREATE TABLE " + TB_PATIENT + "("
+            + ID + " TEXT, "
+            + NAME + " TEXT, "
+            + AGE + " TEXT, "
+            + BLOOD_TYPE + " TEXT, "
+            + WEIGHT + " TEXT, "
+            + HEIGHT + " TEXT, "
+            + ALLERGIES + " TEXT, "
+            + SUS_CARD + " TEXT, "
+            + HEALTH_INSURANCE + " TEXT, "
+            + EMERGENCY_CONTACTS + " TEXT)";
+
+    public static final String VACCINE_QUERY = "CREATE TABLE " + TB_VACCINE + "("
+                + ID + " INTEGER PRIMARY KEY, "
+                + NAME + " TEXT, "
+                + DATE + " TEXT, "
+                + TYPE + " TEXT, "
+                + BATCH + " TEXT, "
+                + PLACE + " TEXT, "
+                + MANUFACTURER + " TEXT)";
 }

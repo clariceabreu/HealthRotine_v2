@@ -114,7 +114,7 @@ public class Medicine extends Entity {
     public void setFrequency(int frequency) {
         this.frequency = frequency;
 
-        if (frequency != -1) {
+        if (frequency != -1 && this.frequencyUnity != null) {
             if (this.frequencyUnity.equals("horas")) {
                 this.administrationTimes = new ArrayList<Date>();
                 this.administrationTimes.add(this.getDate());
@@ -171,6 +171,14 @@ public class Medicine extends Entity {
 
     public List<Date> getAdministrationTimes() {
         return administrationTimes;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 
     public void setAdministrationTimes(List<Date> administrationTimes) {

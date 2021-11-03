@@ -18,21 +18,16 @@ public class Queries {
 
     public static final String MEDICALAPPOINTMENT_QUERY = "CREATE TABLE " + TB_MEDICALAPPOINTMENT + "("
             + ID + " INTEGER PRIMARY KEY, "
-            + NAME + " TEXT, "
             + SPECIALTY + " TEXT, "
-            + SPECIALIST_ID + " INTEGER, "
             + DATE + " TEXT, "
             + TIME + " TEXT, "
-            + COMMENTS + " TEXT)";
+            + COMMENTS + " TEXT, "
+            + SPECIALIST_ID + " INTEGER DEFAULT 0)";
 
     public static final String SPECIALIST_QUERY = "CREATE TABlE " + TB_SPECIALIST + "("
             + ID + " INTEGER PRIMARY KEY, "
             + NAME + " TEXT, "
-            + SPECIALTY_ID + " INTEGER, "
+            + SPECIALTY + " TEXT, "
             + CERTIFICATION + " TEXT)";
-
-    public static final String SPECIALTY_QUERY = "CREATE TABlE " + TB_SPECIALTY + "("
-            + ID + " INTEGER PRIMARY KEY, "
-            + NAME + " TEXT)";
 
 }

@@ -37,11 +37,13 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(MEDICALAPPOINTMENT_QUERY);
         db.execSQL(MEDICINE_QUERY);
         db.execSQL(SPECIALIST_QUERY);
-        db.execSQL(SPECIALTY_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion) {
+            // Update db
+        }
     }
 
     public void deleteFromTable(String table, int id){
@@ -59,10 +61,12 @@ public class DataBase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery( "SELECT * FROM " + table + " WHERE " + ID + " = " + id, null);
         return cursor;
     }
-    public void insertOnTable(String table, ContentValues values){
+    public int insertOnTable(String table, ContentValues values){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(table, null, values);
+        Long id = db.insert(table, null, values);
         db.close();
+
+        return id.intValue();
     }
     public void updateTable(String table, ContentValues values, int id){
         SQLiteDatabase db = this.getWritableDatabase();

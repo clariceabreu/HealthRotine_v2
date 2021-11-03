@@ -3,6 +3,8 @@ package com.fsi.healthrotine.Models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.fsi.healthrotine.DataBase.DataBase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +14,9 @@ import java.util.List;
 
 import static com.fsi.healthrotine.DataBase.Columns.COMMENTS;
 import static com.fsi.healthrotine.DataBase.Columns.DATE;
+import static com.fsi.healthrotine.DataBase.Columns.SPECIALIST_ID;
 import static com.fsi.healthrotine.DataBase.Columns.SPECIALTY;
+import static com.fsi.healthrotine.DataBase.Columns.TB_SPECIALIST;
 import static com.fsi.healthrotine.DataBase.Columns.TIME;
 
 public class MedicalAppointment extends Entity{
@@ -92,6 +96,7 @@ public class MedicalAppointment extends Entity{
         values.put(DATE, dateFormat.format(getDate()));
         values.put(TIME, timeFormat.format(getTime()));
         values.put(COMMENTS, getComments());
+        values.put(SPECIALIST_ID, getSpecialist().getId());
         return values;
     }
 
@@ -115,7 +120,7 @@ public class MedicalAppointment extends Entity{
         }
     }
 
-    public static List<MedicalAppointment> getAll(Cursor cursor) {
+    public static List<MedicalAppointment> getAll(Cursor cursor, DataBase dataBase) {
         List<MedicalAppointment> medicalAppointments = new ArrayList<MedicalAppointment>();
         if(cursor.moveToFirst()){
             do {
@@ -132,6 +137,18 @@ public class MedicalAppointment extends Entity{
                     medicalAppointment.setDate(date);
                     medicalAppointment.setTime(time);
                     medicalAppointment.setComments(cursor.getString(4));
+
+                    int specialist_id = cursor.getInt(5);
+                    if (specialist_id != 0) {
+                        Cursor cursorSpecialist = dataBase.getTableCursorForId(TB_SPECIALIST, specialist_id);
+                        if (cursorSpecialist != null) {
+                            Specialist specialist = new Specialist();
+                            specialist.setId(Integer.parseInt(cursorSpecialist.getString(0)));
+                            specialist.setName(cursorSpecialist.getString(1));
+                            specialist.setSpecialty(cursorSpecialist.getString(2));
+                            medicalAppointment.setSpecialist(specialist);
+                        }
+                    }
 
                     medicalAppointments.add(medicalAppointment);
                 } catch (ParseException e) {

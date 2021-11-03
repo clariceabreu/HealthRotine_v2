@@ -15,14 +15,19 @@ import android.widget.TextView;
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
+import com.fsi.healthrotine.Models.Specialist;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICALAPPOINTMENT;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
+import static com.fsi.healthrotine.DataBase.Columns.TB_SPECIALIST;
 
 public class AddActivity extends AppCompatActivity {
     private String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio"};
@@ -35,6 +40,9 @@ public class AddActivity extends AppCompatActivity {
     private Integer[] frequenciesArray = new Integer[365];
     private String[] frequencyUnitiesArray = new String[]{"horas", "dias"};
     private String[] durationArray = new String[367];
+    private List<Specialist> specialists = new ArrayList<>();
+    private boolean addNewSpecialist = false;
+
     private int selectedPosition = 0;
 
     DataBase db = new DataBase(this);
@@ -43,6 +51,13 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        specialists = Specialist.getAll(db.getTableCursor(TB_SPECIALIST));
+        String[] specialistsNamesArray = new String[specialists.size() + 1];
+        specialistsNamesArray[0] = "Selecione";
+        for (int i = 0; i < specialists.size(); i++) {
+            specialistsNamesArray[i + 1] = specialists.get(i).getName();
+        }
 
         //Data type
         Spinner spinnerType = (Spinner) findViewById(R.id.spinnerType);
@@ -53,6 +68,17 @@ public class AddActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerType.setAdapter(adapterType);
 
+
+        //Specialist
+        final TextView textViewSpecialist = (TextView) findViewById(R.id.textViewSpecialist);
+
+        final Spinner spinnerSpecialist = (Spinner) findViewById(R.id.spinnerSpecialist);
+        ArrayAdapter<String> adapterSpecialist = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, specialistsNamesArray);
+        adapterSpecialist.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSpecialist.setAdapter(adapterSpecialist);
+
+        final EditText editTextSpecialist = (EditText) findViewById(R.id.editTextSpecialist);
+        final Button buttonSpecialist = (Button) findViewById(R.id.buttonAddSpecialist);
 
         //Specialty
         final TextView textViewSpecialy = (TextView) findViewById(R.id.textViewSpecialty);
@@ -87,7 +113,7 @@ public class AddActivity extends AppCompatActivity {
         spinnerMonth.setSelection(month);
 
         int y = 1900;
-        for (int i = 0; i < 201; i++){
+        for (int i = 0; i < 201; i++) {
             yearsArray[i] = (y);
             y++;
         }
@@ -110,7 +136,7 @@ public class AddActivity extends AppCompatActivity {
         spinnerHour.setAdapter(adapterHour);
         spinnerHour.setSelection(hour);
 
-        for (Integer i = 0; i < 61; i++){
+        for (Integer i = 0; i < 61; i++) {
             minutesArray[i] = i;
         }
 
@@ -121,8 +147,8 @@ public class AddActivity extends AppCompatActivity {
         spinnerMinute.setSelection(minute);
 
         //Frequency
-        for (Integer i = 1; i < 366; i ++){
-            frequenciesArray[i-1] = i;
+        for (Integer i = 1; i < 366; i++) {
+            frequenciesArray[i - 1] = i;
         }
 
         final TextView textViewFrequency = (TextView) findViewById(R.id.textViewFrequency);
@@ -140,7 +166,7 @@ public class AddActivity extends AppCompatActivity {
         //Duration
         durationArray[0] = "Selecione";
         durationArray[1] = "Ininterrupto";
-        for (Integer i = 1; i < 366; i ++){
+        for (Integer i = 1; i < 366; i++) {
             if (i == 1)
                 durationArray[i + 1] = i.toString() + " dia";
             else
@@ -171,14 +197,12 @@ public class AddActivity extends AppCompatActivity {
         final Button buttonCreate = (Button) findViewById(R.id.buttonCreate);
 
 
-
-
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedPosition = position;
 
-                if (position == 1){
+                if (position == 1) {
                     textViewName.setVisibility(View.GONE);
                     editTextName.setVisibility(View.GONE);
                     textViewFrequency.setVisibility(View.GONE);
@@ -191,6 +215,9 @@ public class AddActivity extends AppCompatActivity {
                     textViewDosage.setVisibility(View.GONE);
                     editTextDosage.setVisibility(View.GONE);
 
+                    textViewSpecialist.setVisibility(View.VISIBLE);
+                    spinnerSpecialist.setVisibility(View.VISIBLE);
+                    buttonSpecialist.setVisibility(View.VISIBLE);
                     textViewSpecialy.setVisibility(View.VISIBLE);
                     spinnerSpecialty.setVisibility(View.VISIBLE);
                     textViewDate.setVisibility(View.VISIBLE);
@@ -205,13 +232,16 @@ public class AddActivity extends AppCompatActivity {
                     buttonCreate.setVisibility(View.VISIBLE);
 
                     editTextComment.setHint("Endereço, informações importantes, lembretes...");
-                } else if(position == 2){
+                } else if (position == 2) {
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
                     spinnerFrequency.setVisibility(View.GONE);
                     spinnerFrequencyUnity.setVisibility(View.GONE);
                     spinnerFrequencyUnity.setVisibility(View.GONE);
 
+                    textViewSpecialist.setVisibility(View.VISIBLE);
+                    spinnerSpecialist.setVisibility(View.VISIBLE);
+                    buttonSpecialist.setVisibility(View.VISIBLE);
                     textViewName.setVisibility(View.VISIBLE);
                     editTextName.setVisibility(View.VISIBLE);
                     textViewDate.setVisibility(View.VISIBLE);
@@ -233,7 +263,11 @@ public class AddActivity extends AppCompatActivity {
 
                     editTextComment.setHint("Reações alérgicas, efeitos colaterais...");
 
-                } else{
+                } else {
+                    textViewSpecialist.setVisibility(View.GONE);
+                    spinnerSpecialist.setVisibility(View.GONE);
+                    editTextSpecialist.setVisibility(View.GONE);
+                    buttonSpecialist.setVisibility(View.GONE);
                     textViewSpecialy.setVisibility(View.GONE);
                     spinnerSpecialty.setVisibility(View.GONE);
                     textViewName.setVisibility(View.GONE);
@@ -262,12 +296,11 @@ public class AddActivity extends AppCompatActivity {
                 spinnerDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position != 0){
+                        if (position != 0) {
                             textViewFrequency.setVisibility(View.VISIBLE);
                             spinnerFrequency.setVisibility(View.VISIBLE);
                             spinnerFrequencyUnity.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                        } else {
                             textViewFrequency.setVisibility(View.GONE);
                             spinnerFrequency.setVisibility(View.GONE);
                             spinnerFrequencyUnity.setVisibility(View.GONE);
@@ -289,6 +322,39 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        spinnerSpecialist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    Specialist specialistSelected = specialists.get(position - 1);
+                    int specialtyIndex = 0;
+                    for (String specialty : specialtiesArray) {
+                        if (specialty.equals(specialistSelected.getSpecialty())) {
+                            break;
+                        }
+                        specialtyIndex++;
+                    }
+                    spinnerSpecialty.setSelection(specialtyIndex);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Another interface callback
+            }
+          });
+
+        buttonSpecialist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerSpecialist.setVisibility(View.GONE);
+                editTextSpecialist.setVisibility(View.VISIBLE);
+                textViewSpecialy.setVisibility(View.VISIBLE);
+                spinnerSpecialty.setVisibility(View.VISIBLE);
+                addNewSpecialist = true;
+            }
+        });
+
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -297,11 +363,25 @@ public class AddActivity extends AppCompatActivity {
                 if (selectedPosition == 1){
                     MedicalAppointment medicalAppointment = new MedicalAppointment();
 
+                    String specialty = null;
                     if (spinnerSpecialty.getSelectedItemPosition() != 0) {
-                        String specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
+                        specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
                         medicalAppointment.setSpecialty(specialty);
                     }
 
+                    Specialist specialist = null;
+                    if (addNewSpecialist) {
+                        specialist = new Specialist();
+                        specialist.setName(editTextSpecialist.getText().toString());
+                        specialist.setSpecialty(specialty);
+                        int id = db.insertOnTable(TB_SPECIALIST, specialist.getValues());
+                        specialist.setId(id);
+                        specialists.add(specialist);
+                    } else if (spinnerSpecialist.getSelectedItemPosition() != 0){
+                        specialist = specialists.get(spinnerSpecialist.getSelectedItemPosition() - 1);
+                    }
+
+                    medicalAppointment.setSpecialist(specialist);
                     int day = daysArray[spinnerDay.getSelectedItemPosition()];
                     int month = monthsArray[spinnerMonth.getSelectedItemPosition()];
                     int year = yearsArray[spinnerYear.getSelectedItemPosition()];
@@ -321,6 +401,23 @@ public class AddActivity extends AppCompatActivity {
                 } else if (selectedPosition == 2){
                     Medicine medicine = new Medicine();
 
+                    Specialist specialist = null;
+                    if (addNewSpecialist) {
+                        String specialty = null;
+                        if (spinnerSpecialty.getSelectedItemPosition() != 0) {
+                            specialty = specialtiesArray[spinnerSpecialty.getSelectedItemPosition()];
+                        }
+
+                        specialist = new Specialist();
+                        specialist.setName(editTextSpecialist.getText().toString());
+                        specialist.setSpecialty(specialty);
+                        int id = db.insertOnTable(TB_SPECIALIST, specialist.getValues());
+                        specialist.setId(id);
+                    } else if (spinnerSpecialist.getSelectedItemPosition() != 0){
+                        specialist = specialists.get(spinnerSpecialist.getSelectedItemPosition());
+                    }
+
+                    medicine.setSpecialist(specialist);
                     medicine.setName(editTextName.getText().toString());
                     int day = daysArray[spinnerDay.getSelectedItemPosition()];
                     int month = monthsArray[spinnerMonth.getSelectedItemPosition()];

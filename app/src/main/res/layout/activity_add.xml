@@ -306,6 +306,86 @@
             android:background="@drawable/custom_border_textedit"
             tools:visibility="gone" />
 
+        <!-- Vacina -->
+
+        <TextView
+            android:id="@+id/textVaccineType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Tipo de Administração"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spinnerVaccineType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_border_spinner"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textVaccineManufacturer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Fabricante"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextVaccineManufacturer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textVaccineBatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Lote"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextVaccineBatch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textVaccinePlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Local"
+            android:textSize="17dp"
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextVaccinePlace"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:background="@drawable/custom_border_textedit"
+            tools:visibility="gone" />
+
         <Button
             android:id="@+id/buttonCreate"
             android:layout_width="match_parent"

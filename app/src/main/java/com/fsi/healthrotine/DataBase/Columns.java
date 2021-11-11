@@ -6,6 +6,7 @@ public class Columns {
     public static final String TB_SPECIALIST = "tb_specialist";
     public static final String TB_PATIENT = "tb_patient";
     public static final String TB_VACCINE = "tb_vaccine";
+    public static final String TB_EXAM = "tb_exam";
 
     public static final String ID = "id";
     public static final String NAME = "name";
@@ -22,7 +23,6 @@ public class Columns {
     public static final String SPECIALTY = "specialty";
     public static final String SPECIALIST_ID = "specialist_id";
     public static final String CERTIFICATION = "certification";
-    public static final String SPECIALIST= "specialist";
     public static final String AGE = "age";
     public static final String BLOOD_TYPE = "blood_type";
     public static final String WEIGHT = "weight";
@@ -34,4 +34,6 @@ public class Columns {
     public static final String MANUFACTURER = "manufacturer";
     public static final String BATCH = "batch";
     public static final String PLACE = "place";
+    public static final String START_DATE = "startDate";
+    public static final String FILE_LOCATION = "fileLocation";
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.AddActivityComponents;
+import com.fsi.healthrotine.ActivityHelpers.AddActivity.ExamHelpers;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.MedicalAppointmentHelper;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.MedicineHelper;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.VaccineHelper;
@@ -44,7 +45,7 @@ public class AddActivity extends AppCompatActivity {
             specialistsNamesArray[i + 1] = specialists.get(i).getName();
         }
 
-        AddActivityComponents components = new AddActivityComponents(this);
+        final AddActivityComponents components = new AddActivityComponents(this);
         components.buildComponents(specialistsNamesArray);
         components.hideAllComponents();
 
@@ -75,6 +76,9 @@ public class AddActivity extends AppCompatActivity {
                     components.setHints(hints);
                 } else if (position == 3) {
                     HashSet<String> componentsToShow = VaccineHelper.getComponents();
+                    components.showComponents(componentsToShow);
+                } else if (position == 4) {
+                    HashSet<String> componentsToShow = ExamHelpers.getComponents();
                     components.showComponents(componentsToShow);
                 }
             }
@@ -185,6 +189,19 @@ public class AddActivity extends AppCompatActivity {
                         goToMainPage();
                     } catch (Exception e) {
                         Snackbar.make(view, "Erro ao adicionar consulta", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                } else if (selectedPosition == 4) {
+                    try {
+                        ExamHelpers.saveExam(components, db, addNewSpecialist, specialists);
+
+                        Snackbar.make(view, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                        goToMainPage();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Snackbar.make(view, "Erro ao adicionar exame", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 }

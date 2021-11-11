@@ -154,6 +154,8 @@
 
         </LinearLayout>
 
+
+
         <TextView
             android:id="@+id/textViewHour"
             android:layout_width="121dp"

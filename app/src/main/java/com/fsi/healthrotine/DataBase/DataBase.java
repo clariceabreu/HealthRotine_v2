@@ -25,7 +25,7 @@ import static com.fsi.healthrotine.DataBase.Columns.*;
 import static com.fsi.healthrotine.DataBase.Queries.*;
 
 public class DataBase extends SQLiteOpenHelper {
-    private static final int VERSION = 4;
+    private static final int VERSION = 7;
     private static final String DBNAME = "db_HealthRotine";
 
     public DataBase(Context context) {
@@ -39,13 +39,18 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(SPECIALIST_QUERY);
         db.execSQL(PATIENT_QUERY);
         db.execSQL(VACCINE_QUERY);
+        db.execSQL(EXAM_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            db.execSQL(VACCINE_QUERY);
-            db.execSQL(PATIENT_QUERY);
+            db.execSQL(DROP1);
+            db.execSQL(DROP2);
+            db.execSQL(DROP3);
+            db.execSQL(MEDICALAPPOINTMENT_QUERY);
+            db.execSQL(MEDICINE_QUERY);
+            db.execSQL(EXAM_QUERY);
         }
     }
 

@@ -21,7 +21,7 @@ import java.util.List;
 public class AddActivityComponents {
 
     //Constants
-    public static String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio", "Vacina"};
+    public static String[] typesArray = new String[]{"Selecione", "Consulta", "Remédio", "Vacina", "Exame"};
     public static String[] specialtiesArray = new String[]{"Selecione","Acupuntura", "Alergia e Imunologia", "Anestesiologia", "Angiologia", "Cancerologia", "Cardiologia", "Cirurgia Cardiovascular", "Cirurgia da Mão", "Cirurgia de Cabeça e Pescoço", "Cirurgia do Aparelho Digestivo", "Cirurgia Geral", "Cirurgia Pediátrica", "Cirurgia Plástica", "Cirurgia Torácica", "Cirurgia Vascular", "Clínica Médica", "Coloproctologia", "Dermatologia", "Endocrinologia e Metabologia", "Endoscopia", "Gastroenterologia", "Genética Médica", "Geriatria", "Ginecologia e Obstetrícia", "Hematologia e Hemoterapia", "Homeopatia", "Infectologia", "Mastologia", "Medicina de Família e Comunidade", "Medicina do Trabalho", "Medicina de Tráfego", "Medicina Esportiva", "Medicina Física e Reabilitação", "Medicina Intensiva", "Medicina Legal e Perícia Médica", "Medicina Nuclear", "Medicina Preventiva e Social", "Nefrologia", "Neurocirurgia", "Neurologia", "Nutrologia", "Oftalmologia", "Ortopedia e Traumatologia", "Otorrinolaringologia", "Patologia", "Patologia Clínica/Medicina Laboratorial", "Pediatria", "Pneumologia", "Psiquiatria", "Radiologia e Diagnóstico por Imagem", "Radioterapia", "Reumatologia", "Urologia"};
     public static Integer[] daysArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
     public static Integer[] monthsArray = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -56,7 +56,7 @@ public class AddActivityComponents {
     private EditText editTextVaccinePlace;
     private TextView textViewSpecialist;
     private Button buttonSpecialist;
-    private TextView textViewSpecialy;
+    private TextView textViewSpecialty;
     private TextView textViewName;
     private TextView textViewDate;
     private TextView textViewHour;
@@ -96,7 +96,7 @@ public class AddActivityComponents {
         buttonSpecialist = (Button) activity.findViewById(R.id.buttonAddSpecialist);
 
         //Specialty
-        textViewSpecialy = (TextView) activity.findViewById(R.id.textViewSpecialty);
+        textViewSpecialty = (TextView) activity.findViewById(R.id.textViewSpecialty);
 
         spinnerSpecialty = (Spinner) activity.findViewById(R.id.spinnerSpecialty);
         ArrayAdapter<String> adapterSpecialty = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_dropdown_item, specialtiesArray);
@@ -241,6 +241,7 @@ public class AddActivityComponents {
 
     public void showComponents(HashSet<String> components) {
         for (String component : components) {
+            System.out.println(component);
             componentsNames.get(component).setVisibility(View.VISIBLE);
         }
     }
@@ -295,7 +296,7 @@ public class AddActivityComponents {
         componentsNames.put("editTextVaccinePlace", editTextVaccinePlace);
         componentsNames.put("textViewSpecialist", textViewSpecialist);
         componentsNames.put("buttonSpecialist", buttonSpecialist);
-        componentsNames.put("textViewSpecialy", textViewSpecialy);
+        componentsNames.put("textViewSpecialty", textViewSpecialty);
         componentsNames.put("textViewName", textViewName);
         componentsNames.put("textViewDate", textViewDate);
         componentsNames.put("textViewHour", textViewHour);

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_EXAM;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
 import static com.fsi.healthrotine.DataBase.Columns.TB_SPECIALIST;
 
@@ -33,6 +34,9 @@ public class ExamHelpers {
                 "editTextComment",
                 "textViewType",
                 "editTextType",
+                "textViewUpload",
+                "textViewUploaded",
+                "uploadFile",
                 "buttonCreate"
         ));
     }
@@ -67,7 +71,7 @@ public class ExamHelpers {
         exam.setDate(new Date(year - 1900, month - 1, day, hour, minutes));
         exam.setComments(components.getComponentText("editTextComment"));
         exam.setType(components.getComponentText("editTextType"));
-
-        db.insertOnTable(TB_MEDICINE, exam.getValues());
+        exam.setFileLocation(components.getComponentText("textViewUploaded"));
+        db.insertOnTable(TB_EXAM, exam.getValues());
     }
 }

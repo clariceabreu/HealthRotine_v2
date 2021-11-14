@@ -1,7 +1,7 @@
 package com.fsi.healthrotine.ActivityHelpers.AddActivity;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,14 +9,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fsi.healthrotine.AddActivity;
-import com.fsi.healthrotine.Models.Specialist;
 import com.fsi.healthrotine.R;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class AddActivityComponents {
 
@@ -69,6 +66,9 @@ public class AddActivityComponents {
     private TextView textViewVaccineManufacturer;
     private TextView textViewVaccineBatch;
     private TextView textViewVaccinePlace;
+    private TextView textViewUpload;
+    private TextView textViewUploaded;
+    private FloatingActionButton uploadFile;
     private Button buttonCreate;
 
     private HashMap<String, View> componentsNames = new HashMap<>();
@@ -226,6 +226,11 @@ public class AddActivityComponents {
         textViewVaccinePlace = (TextView) activity.findViewById(R.id.textVaccinePlace);
         editTextVaccinePlace = (EditText) activity.findViewById(R.id.editTextVaccinePlace);
 
+        //Exam
+        textViewUpload = (TextView) activity.findViewById(R.id.textViewUpload);
+        textViewUploaded = (TextView) activity.findViewById(R.id.textViewUploaded);
+        uploadFile = (FloatingActionButton) activity.findViewById(R.id.uploadFile);
+
         //Button
         buttonCreate = (Button) activity.findViewById(R.id.buttonCreate);
 
@@ -309,6 +314,9 @@ public class AddActivityComponents {
         componentsNames.put("textViewVaccineManufacturer", textViewVaccineManufacturer);
         componentsNames.put("textViewVaccineBatch", textViewVaccineBatch);
         componentsNames.put("textViewVaccinePlace", textViewVaccinePlace);
+        componentsNames.put("textViewUpload", textViewUpload);
+        componentsNames.put("textViewUploaded", textViewUploaded);
+        componentsNames.put("uploadFile", uploadFile);
         componentsNames.put("buttonCreate", buttonCreate);
     }
 

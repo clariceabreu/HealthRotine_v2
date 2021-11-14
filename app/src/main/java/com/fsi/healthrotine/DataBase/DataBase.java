@@ -3,23 +3,9 @@ package com.fsi.healthrotine.DataBase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.support.v4.app.NavUtils;
 
-import com.fsi.healthrotine.Models.Entity;
-import com.fsi.healthrotine.Models.MedicalAppointment;
-import com.fsi.healthrotine.Models.Medicine;
-
-import java.util.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SimpleTimeZone;
 
 import static com.fsi.healthrotine.DataBase.Columns.*;
 import static com.fsi.healthrotine.DataBase.Queries.*;

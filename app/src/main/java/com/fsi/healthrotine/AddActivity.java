@@ -1,22 +1,35 @@
 package com.fsi.healthrotine;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.AddActivityComponents;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.ExamHelpers;
+import com.fsi.healthrotine.ActivityHelpers.AddActivity.FilesHelper;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.MedicalAppointmentHelper;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.MedicineHelper;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.VaccineHelper;
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.Specialist;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,11 +39,16 @@ import java.util.List;
 import static com.fsi.healthrotine.DataBase.Columns.TB_SPECIALIST;
 
 public class AddActivity extends AppCompatActivity {
+
+    private static final int PICK_FILE_REQUEST = 100;
+    private static final String TAG = "AddActivity";
+
     private List<Specialist> specialists = new ArrayList<>();
     private boolean addNewSpecialist = false;
 
     private int selectedPosition = 0;
 
+    TextView textViewUploaded;
     DataBase db = new DataBase(this);
 
     @Override
@@ -54,6 +72,8 @@ public class AddActivity extends AppCompatActivity {
         Spinner spinnerSpecialist = (Spinner) components.getComponent("spinnerSpecialist");
         Button buttonSpecialist = (Button) components.getComponent("buttonSpecialist");
         Button buttonCreate = (Button) components.getComponent("buttonCreate");
+        FloatingActionButton uploadFile = (FloatingActionButton) components.getComponent("uploadFile");
+        textViewUploaded = (TextView) components.getComponent("textViewUploaded");
 
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -207,6 +227,13 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         });
+
+        uploadFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upload(view);
+            }
+        });
     }
 
     public void goToMainPage(){
@@ -218,5 +245,79 @@ public class AddActivity extends AppCompatActivity {
                 }
             },
             1000);
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if(requestCode == PICK_FILE_REQUEST){
+            if(resultData == null){
+                //no data present
+                return;
+            }
+
+            // Get the Uri of the selected file
+            Uri selectedFileUri = resultData.getData();
+            Log.e(TAG, "selected File Uri: "+selectedFileUri );
+            // Get the path
+            String selectedFilePath = FilesHelper.getPath(this, selectedFileUri);
+            Log.e(TAG,"Selected File Path:" + selectedFilePath);
+
+
+            if(selectedFilePath != null && !selectedFilePath.equals("")){
+                try {
+                    String[] pathSplit = selectedFilePath.split("/");
+                    FileOutputStream fileout = openFileOutput(pathSplit[pathSplit.length - 1], MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    FileInputStream fileIn=new FileInputStream (new File(selectedFilePath));
+                    outputWriter.write(String.valueOf(fileIn));
+                    outputWriter.close();
+                    textViewUploaded.setText(pathSplit[pathSplit.length - 1]);
+                    //display file saved message
+                    Toast.makeText(getBaseContext(), "Arquivo carregado com sucesso!",
+                            Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Toast.makeText(getBaseContext(), "Erro ao salvar arquivo :(",
+                            Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+            }else{
+                Toast.makeText(this,"Erro ao salvar arquivo :(",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, resultData);
+    }
+
+    // This method will get call when user click on upload file button
+    public void upload(View view) {
+
+        Intent intent;
+        if (android.os.Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
+            intent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
+            intent.putExtra("CONTENT_TYPE", "*/*");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+        } else {
+
+            String[] mimeTypes =
+                    {"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
+                            "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
+                            "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
+                            "text/plain",
+                            "application/pdf",
+                            "application/zip", "application/vnd.android.package-archive"};
+
+
+            intent = new Intent(Intent.ACTION_GET_CONTENT); // or ACTION_OPEN_DOCUMENT
+            intent.setType("*/*");
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+            Log.e(TAG, "uploadFile: else" );
+        }
+        startActivityForResult(Intent.createChooser(intent,"Escolha o arquivo.."),PICK_FILE_REQUEST);
     }
 }

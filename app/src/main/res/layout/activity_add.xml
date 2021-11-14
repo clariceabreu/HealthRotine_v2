@@ -14,13 +14,9 @@
         android:padding="30dp"
         tools:visibility="invisible">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:text="Tipo"
-            android:textColor="@android:color/black"
-            android:textSize="17dp" />
+
+
+
 
         <Spinner
             android:id="@+id/spinnerType"
@@ -28,6 +24,38 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custom_border_spinner"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textViewUpload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Insira um arquivo"
+            android:textColor="@android:color/black"
+            android:textSize="17dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/uploadFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/stat_sys_upload" />
+
+            <TextView
+                android:id="@+id/textViewUploaded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="17dp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewSpecialist"

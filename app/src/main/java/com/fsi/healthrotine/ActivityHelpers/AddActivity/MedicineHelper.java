@@ -1,7 +1,5 @@
 package com.fsi.healthrotine.ActivityHelpers.AddActivity;
 
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.Medicine;

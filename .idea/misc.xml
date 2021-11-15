@@ -3,12 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/bg_btn.xml" value="0.3770833333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.3770833333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.21302083333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_bloodtype_24.xml" value="0.3770833333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.3770833333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3770833333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_add.xml" value="0.20244565217391305" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_patient.xml" value="0.33" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_splash_screen.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/dialog_layout.xml" value="0.25" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_future.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_historic.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_rotine.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/toolbar.xml" value="0.33" />
+        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3567708333333333" />
         <entry key="app/src/main/res/layout/activity_add.xml" value="0.43385416666666665" />
         <entry key="app/src/main/res/layout/fragment_historic.xml" value="0.403125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

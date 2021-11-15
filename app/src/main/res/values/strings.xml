@@ -3,6 +3,7 @@
     <string name="title_historic">Histórico</string>
     <string name="title_rotine">Rotina</string>
     <string name="title_future">Futuro</string>
+    <string name="title_patient">Patient</string>
     <string-array name="type">
         <item>Consulta</item>
         <item>Exame</item>

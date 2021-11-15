@@ -25,9 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.MedicalAppointment;
+import com.fsi.healthrotine.Models.Patient;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -81,19 +83,22 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*FloatingActionButton fab = findViewById(R.id.fab);
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToAddPage();
             }
-        });*/
+        });
 
         historicFragment = new HistoricFragment();
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
 
         setFragment(historicFragment); //default fragment
+
+
     }
 
     public void goToAddPage(){
@@ -107,4 +112,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    private void goToPatientPage(){
+        Intent intent = new Intent(this, Patient.class);
+        startActivity(intent);
+    }
 }

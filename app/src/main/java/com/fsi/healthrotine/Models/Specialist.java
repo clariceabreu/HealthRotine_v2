@@ -9,6 +9,7 @@ import java.util.List;
 
 import static com.fsi.healthrotine.DataBase.Columns.COMMENTS;
 import static com.fsi.healthrotine.DataBase.Columns.DATE;
+import static com.fsi.healthrotine.DataBase.Columns.ID;
 import static com.fsi.healthrotine.DataBase.Columns.NAME;
 import static com.fsi.healthrotine.DataBase.Columns.SPECIALTY;
 import static com.fsi.healthrotine.DataBase.Columns.TIME;
@@ -65,6 +66,7 @@ public class Specialist extends Entity {
 
     public ContentValues getValues() {
         ContentValues values = new ContentValues();
+        values.put(ID, getId());
         values.put(NAME, getName());
         values.put(SPECIALTY, getSpecialty());
         return values;

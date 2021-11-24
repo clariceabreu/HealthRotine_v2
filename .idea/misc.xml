@@ -3,42 +3,45 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/bg_btn.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/color_cursor.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_add_circle_black_24dp.xml" value="0.15462962962962962" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.21302083333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_account_circle_24_gray.xml" value="0.15462962962962962" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_account_circle_24_green.xml" value="0.36976506639427986" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_arrow_back.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_balance_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_block_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_bloodtype_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_card_membership_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_contact_phone_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_credit_card_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_height_24.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.22" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_history_black_24dp.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3770833333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_add.xml" value="0.20244565217391305" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_patient.xml" value="0.25" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/activity_splash_screen.xml" value="0.3567708333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/dialog_contacts.xml" value="0.3567708333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/dialog_layout.xml" value="0.25" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_future.xml" value="0.3567708333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_historic.xml" value="0.3567708333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/fragment_rotine.xml" value="0.3567708333333333" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/layout/toolbar.xml" value="0.33" />
-        <entry key="..\:/Users/gutof/OneDrive/Documentos/HealthRotine_v2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/drawable/bg_btn.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_add_circle_black_24dp.xml" value="0.15462962962962962" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24_gray.xml" value="0.15462962962962962" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24_green.xml" value="0.36976506639427986" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_balance_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_block_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_bloodtype_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_card_membership_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_contact_phone_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_credit_card_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_height_24.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/ic_history_black_24dp.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3770833333333333" />
+        <entry key="app/src/main/res/layout/activity_add.xml" value="0.20244565217391305" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_patient.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/dialog_contacts.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_future.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/fragment_historic.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/fragment_rotine.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3567708333333333" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.5942708333333333" />
         <entry key="app/src/main/res/layout/activity_add.xml" value="0.43385416666666665" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.42864583333333334" />
         <entry key="app/src/main/res/layout/fragment_historic.xml" value="0.403125" />
+        <entry key="app/src/main/res/layout/fragment_rotine.xml" value="0.42864583333333334" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

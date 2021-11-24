@@ -1,6 +1,15 @@
 package com.fsi.healthrotine.DataBase;
+import com.fsi.healthrotine.Models.Specialist;
+
+import java.sql.Time;
+import java.util.Date;
+
 import static com.fsi.healthrotine.DataBase.Columns.*;
 public class Queries {
+    public static final String DROP1 = "DROP TABLE IF EXISTS " + TB_MEDICALAPPOINTMENT + ";";
+    public static final String DROP2 = "DROP TABLE IF EXISTS " + TB_MEDICINE + ";";
+    public static final String DROP3 = "DROP TABLE IF EXISTS " + TB_EXAM + ";";
+    public static final String DROP4 = "DROP TABLE IF EXISTS " + TB_SPECIALIST + ";";
     public static final String
             MEDICINE_QUERY = "CREATE TABLE tb_medicine ("
             + ID + " INTEGER PRIMARY KEY, "
@@ -52,4 +61,14 @@ public class Queries {
                 + BATCH + " TEXT, "
                 + PLACE + " TEXT, "
                 + MANUFACTURER + " TEXT)";
+
+    public static final String EXAM_QUERY = "CREATE TABLE " + TB_EXAM + "("
+            + ID + " INTEGER PRIMARY KEY, "
+            + DATE + " TEXT, "
+            + TIME + " TEXT, "
+            + TYPE + " TEXT, "
+            + FILE_LOCATION + " TEXT, "
+            + SPECIALIST_ID + " INTEGER DEFAULT 0, "
+            + COMMENTS + " TEXT)";
 }
+

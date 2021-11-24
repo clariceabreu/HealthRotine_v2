@@ -109,9 +109,9 @@ public class Vaccine extends Entity {
                     Date date = new Date(dateFormat.parse(cursor.getString(2)).getTime());
                     vaccine.setDate(date);
                     vaccine.setType(cursor.getString(3));
-                    vaccine.setManufacturer(cursor.getString(4));
-                    vaccine.setBatch(cursor.getString(5));
-                    vaccine.setPlace(cursor.getString(6));
+                    vaccine.setBatch(cursor.getString(4));
+                    vaccine.setPlace(cursor.getString(5));
+                    vaccine.setManufacturer(cursor.getString(6));
                     vaccines.add(vaccine);
                 } catch (ParseException e) {
                     e.printStackTrace();

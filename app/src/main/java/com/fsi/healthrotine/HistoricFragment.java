@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.fragment.app.Fragment;
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.CardObject;
+import com.fsi.healthrotine.Models.Exam;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
+import com.fsi.healthrotine.Models.Vaccine;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
@@ -37,8 +38,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_EXAM;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICALAPPOINTMENT;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
+import static com.fsi.healthrotine.DataBase.Columns.TB_VACCINE;
 
 
 /**
@@ -47,7 +50,7 @@ import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
 public class HistoricFragment extends Fragment {
     private DataBase db;
     private Context context;
-    private String[] typesArray = new String[]{"Ambos", "Consulta", "Remédio"};
+    private String[] typesArray = new String[]{"Ambos", "Consulta", "Remédio", "Exame", "Vacina"};
     private String[] specialtiesArray = new String[]{"Selecione","Acupuntura", "Alergia e Imunologia", "Anestesiologia", "Angiologia", "Cancerologia", "Cardiologia", "Cirurgia Cardiovascular", "Cirurgia da Mão", "Cirurgia de Cabeça e Pescoço", "Cirurgia do Aparelho Digestivo", "Cirurgia Geral", "Cirurgia Pediátrica", "Cirurgia Plástica", "Cirurgia Torácica", "Cirurgia Vascular", "Clínica Médica", "Coloproctologia", "Dermatologia", "Endocrinologia e Metabologia", "Endoscopia", "Gastroenterologia", "Genética Médica", "Geriatria", "Ginecologia e Obstetrícia", "Hematologia e Hemoterapia", "Homeopatia", "Infectologia", "Mastologia", "Medicina de Família e Comunidade", "Medicina do Trabalho", "Medicina de Tráfego", "Medicina Esportiva", "Medicina Física e Reabilitação", "Medicina Intensiva", "Medicina Legal e Perícia Médica", "Medicina Nuclear", "Medicina Preventiva e Social", "Nefrologia", "Neurocirurgia", "Neurologia", "Nutrologia", "Oftalmologia", "Ortopedia e Traumatologia", "Otorrinolaringologia", "Patologia", "Patologia Clínica/Medicina Laboratorial", "Pediatria", "Pneumologia", "Psiquiatria", "Radiologia e Diagnóstico por Imagem", "Radioterapia", "Reumatologia", "Urologia"};
     private LinearLayout layout;
 
@@ -117,6 +120,10 @@ public class HistoricFragment extends Fragment {
                                     type = "medicalAppointment";
                                 } else if (spinnerType.getSelectedItemPosition() == 2){
                                     type = "medicine";
+                                }else if (spinnerType.getSelectedItemPosition() == 3){
+                                    type = "exam";
+                                }else if (spinnerType.getSelectedItemPosition() == 4){
+                                    type = "vaccine";
                                 }
 
                                 String specialty = null;
@@ -195,6 +202,37 @@ public class HistoricFragment extends Fragment {
                     cardObject.setType("MedicalAppointment");
                     cardObject.setDate(appointment.getDate());
                     cardObject.setTime(appointment.getTime());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+        }
+
+        List<Exam> exams = new ArrayList<Exam>();
+        if (type == "exam" || type == null) {
+            exams = Exam.getAll(db.getTableCursor(TB_EXAM), db);
+            for (Exam exam : exams) {
+                if (today.compareTo(exam.getDate()) == 1) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(exam.getId());
+                    cardObject.setType("Exam");
+                    cardObject.setDate(exam.getDate());
+                    cardObject.setTime(exam.getTime());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+        }
+
+        List<Vaccine> vaccines = new ArrayList<Vaccine>();
+        if (type == "vaccine" || type == null) {
+            vaccines = Vaccine.getAll(db.getTableCursor(TB_VACCINE));
+            for (Vaccine vaccine : vaccines) {
+                if (today.compareTo(vaccine.getDate()) == 1) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(vaccine.getId());
+                    cardObject.setType("Vaccine");
+                    cardObject.setDate(vaccine.getDate());
 
                     cardObjects.add(cardObject);
                 }
@@ -307,6 +345,30 @@ public class HistoricFragment extends Fragment {
                 timeText =  "<b>Hora: </b> " + timeFormat.format(medicalAppointment.getTime());
                 if (medicalAppointment.getComments() != null && medicalAppointment.getComments().length() != 0) {
                     commentsText = "<b>Comentários: </b> " + medicalAppointment.getComments();
+                }
+            }
+            else if (obj.getType() == "Exam") {
+                titleText = "<b>Exame</b> ";
+
+                Exam exam = null;
+                for (Exam a : exams){
+                    if (a.getId() == obj.getId()){
+                        exam = a;
+                        break;
+                    }
+                }
+                if (exam.getComments() != null && exam.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + exam.getComments();
+                }
+            }else if (obj.getType() == "Vaccine") {
+                titleText = "<b>Vacina</b> ";
+
+                Vaccine vaccine = null;
+                for (Vaccine a :vaccines){
+                    if (a.getId() == obj.getId()){
+                        vaccine = a;
+                        break;
+                    }
                 }
             }
 

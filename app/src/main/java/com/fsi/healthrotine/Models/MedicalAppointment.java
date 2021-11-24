@@ -96,7 +96,7 @@ public class MedicalAppointment extends Entity{
         values.put(DATE, dateFormat.format(getDate()));
         values.put(TIME, timeFormat.format(getTime()));
         values.put(COMMENTS, getComments());
-        values.put(SPECIALIST_ID, getSpecialist().getId());
+        values.put(SPECIALIST_ID, getSpecialist() != null ? getSpecialist().getId() : -1);
         return values;
     }
 
@@ -141,11 +141,12 @@ public class MedicalAppointment extends Entity{
                     int specialist_id = cursor.getInt(5);
                     if (specialist_id != 0) {
                         Cursor cursorSpecialist = dataBase.getTableCursorForId(TB_SPECIALIST, specialist_id);
-                        if (cursorSpecialist != null) {
+                        if (cursorSpecialist.getCount() > 0) {
                             Specialist specialist = new Specialist();
                             specialist.setId(Integer.parseInt(cursorSpecialist.getString(0)));
                             specialist.setName(cursorSpecialist.getString(1));
                             specialist.setSpecialty(cursorSpecialist.getString(2));
+                            specialist.setCertification(cursorSpecialist.getString(3));
                             medicalAppointment.setSpecialist(specialist);
                         }
                     }

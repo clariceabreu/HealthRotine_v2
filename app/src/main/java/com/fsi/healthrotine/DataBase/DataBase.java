@@ -3,29 +3,15 @@ package com.fsi.healthrotine.DataBase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.support.v4.app.NavUtils;
 
-import com.fsi.healthrotine.Models.Entity;
-import com.fsi.healthrotine.Models.MedicalAppointment;
-import com.fsi.healthrotine.Models.Medicine;
-
-import java.util.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SimpleTimeZone;
 
 import static com.fsi.healthrotine.DataBase.Columns.*;
 import static com.fsi.healthrotine.DataBase.Queries.*;
 
 public class DataBase extends SQLiteOpenHelper {
-    private static final int VERSION = 1;
+    private static final int VERSION = 10;
     private static final String DBNAME = "db_HealthRotine";
 
     public DataBase(Context context) {
@@ -39,12 +25,17 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(SPECIALIST_QUERY);
         db.execSQL(PATIENT_QUERY);
         db.execSQL(VACCINE_QUERY);
+        db.execSQL(EXAM_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            // Update db
+            db.execSQL(DROP1);
+            db.execSQL(DROP4);
+            db.execSQL(SPECIALIST_QUERY);
+            db.execSQL(MEDICALAPPOINTMENT_QUERY);
+
         }
     }
 

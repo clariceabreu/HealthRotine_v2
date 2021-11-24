@@ -1,6 +1,7 @@
 package com.fsi.healthrotine;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -21,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private HistoricFragment historicFragment;
     private RotineFragment rotineFragment;
     private FutureFragment futureFragment;
+    private ProfileFragment profileFragment;
+    private ImageButton imgBack;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,22 +90,48 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        FloatingActionButton fab = findViewById(R.id.profileButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToAddPage();
+                goToPatientPage();
             }
         });
+
 
         historicFragment = new HistoricFragment();
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
+        profileFragment = new ProfileFragment();
 
-        setFragment(historicFragment); //default fragment
+        setFragment(profileFragment); //default fragment
 
+        /*Button btnExit = findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });*/
 
+        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+        getSupportActionBar().setTitle("Seu titulo aqui");     //Titulo para ser exibido na sua Action Bar em frente à seta*/
     }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                startActivity(new Intent(this, MainActivity.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                break;
+            default:break;
+        }
+        return true;
+    }*/
+
 
     public void goToAddPage(){
         Intent intent = new Intent(this, AddActivity.class);
@@ -113,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToPatientPage(){
-        Intent intent = new Intent(this, Patient.class);
+        Intent intent = new Intent(this, ProfileFragment.class);
         startActivity(intent);
     }
 }

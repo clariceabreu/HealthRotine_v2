@@ -1,10 +1,21 @@
 package com.fsi.healthrotine.Models;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 import static com.fsi.healthrotine.DataBase.Columns.*;
+
+import com.fsi.healthrotine.DataBase.DataBase;
+import com.fsi.healthrotine.R;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -13,9 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Patient extends Entity{
+public class Patient extends Entity {
 
-    private String name;
     private int age;
     private String blood_type;
     private int weight;
@@ -25,6 +35,10 @@ public class Patient extends Entity{
     private int health_insurance_card;
     private String email;
     private String emergency_contacts;
+
+    private DataBase db;
+    private Context context;
+    private LinearLayout layout;
 
 
     public Patient(){}

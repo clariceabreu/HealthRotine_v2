@@ -41,11 +41,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+
 import static com.fsi.healthrotine.DataBase.Columns.*;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 
-public class ProfileFragment extends Fragment  {
+public class ProfileFragment extends Fragment {
     private DataBase db;
     private Context context;
     private LinearLayout layout;
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment  {
     private Button btnPlano;
     private Button btnEmail;
     private Button btnContatos;
+    private Button btnExit;
 
     public ProfileFragment() {
         // Required empty public constructor

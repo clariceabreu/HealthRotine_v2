@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private RotineFragment rotineFragment;
     private FutureFragment futureFragment;
     private ProfileFragment profileFragment;
-    private ImageButton imgBack;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -108,29 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
         setFragment(profileFragment); //default fragment
 
-        /*Button btnExit = findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });*/
 
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
-        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Seu titulo aqui");     //Titulo para ser exibido na sua Action Bar em frente à seta*/
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
-        switch (item.getItemId()) {
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(this, MainActivity.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
-                break;
-            default:break;
-        }
-        return true;
-    }*/
 
 
     public void goToAddPage(){
@@ -148,4 +126,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileFragment.class);
         startActivity(intent);
     }
+
+    /*public static void exitApp(View view){
+        Button btnExit = view.findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
+    }*/
 }

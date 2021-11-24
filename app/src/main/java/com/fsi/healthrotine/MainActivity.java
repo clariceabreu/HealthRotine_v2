@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
 
-        setFragment(historicFragment); //default fragment
+        setFragment(rotineFragment); //default fragment
     }
 
     public void goToAddPage(){

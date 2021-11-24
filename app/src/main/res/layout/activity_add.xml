@@ -14,10 +14,6 @@
         android:padding="30dp"
         tools:visibility="invisible">
 
-
-
-
-
         <Spinner
             android:id="@+id/spinnerType"
             android:layout_width="match_parent"

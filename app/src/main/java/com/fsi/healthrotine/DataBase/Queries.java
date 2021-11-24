@@ -9,6 +9,7 @@ public class Queries {
     public static final String DROP1 = "DROP TABLE IF EXISTS " + TB_MEDICALAPPOINTMENT + ";";
     public static final String DROP2 = "DROP TABLE IF EXISTS " + TB_MEDICINE + ";";
     public static final String DROP3 = "DROP TABLE IF EXISTS " + TB_EXAM + ";";
+    public static final String DROP4 = "DROP TABLE IF EXISTS " + TB_SPECIALIST + ";";
     public static final String
             MEDICINE_QUERY = "CREATE TABLE tb_medicine ("
             + ID + " INTEGER PRIMARY KEY, "

@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.CardObject;
+import com.fsi.healthrotine.Models.Exam;
 import com.fsi.healthrotine.Models.MedicalAppointment;
 import com.fsi.healthrotine.Models.Medicine;
+import com.fsi.healthrotine.Models.Vaccine;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Time;
@@ -29,8 +31,10 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_EXAM;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICALAPPOINTMENT;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
+import static com.fsi.healthrotine.DataBase.Columns.TB_VACCINE;
 
 
 /**
@@ -110,6 +114,37 @@ public class RotineFragment extends Fragment {
             }
         }
 
+        List<Exam> exams = new ArrayList<Exam>();
+
+            exams = Exam.getAll(db.getTableCursor(TB_EXAM), db);
+            for (Exam exam : exams) {
+                if (dateLimitStart.compareTo(exam.getDate()) == 0) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(exam.getId());
+                    cardObject.setType("Exam");
+                    cardObject.setDate(exam.getDate());
+                    cardObject.setTime(exam.getTime());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+
+
+        List<Vaccine> vaccines = new ArrayList<Vaccine>();
+
+            vaccines = Vaccine.getAll(db.getTableCursor(TB_VACCINE));
+            for (Vaccine vaccine : vaccines) {
+                if (dateLimitStart.compareTo(vaccine.getDate()) == 0) {
+                    CardObject cardObject = new CardObject();
+                    cardObject.setId(vaccine.getId());
+                    cardObject.setType("Vaccine");
+                    cardObject.setDate(vaccine.getDate());
+
+                    cardObjects.add(cardObject);
+                }
+            }
+
+
 
         //Order the array ascending
         Collections.sort(cardObjects, new Comparator<CardObject>() {
@@ -182,6 +217,29 @@ public class RotineFragment extends Fragment {
                 }
                 if (medicalAppointment.getComments() != null && medicalAppointment.getComments().length() != 0) {
                     commentsText = "<b>Comentários: </b> " + medicalAppointment.getComments();
+                }
+            }else if (obj.getType() == "Exam") {
+                titleText = "<b>Exame</b> ";
+
+                Exam exam = null;
+                for (Exam a : exams){
+                    if (a.getId() == obj.getId()){
+                        exam = a;
+                        break;
+                    }
+                }
+                if (exam.getComments() != null && exam.getComments().length() != 0) {
+                    commentsText = "<b>Comentários: </b> " + exam.getComments();
+                }
+            }else if (obj.getType() == "Vaccine") {
+                titleText = "<b>Vacina</b> ";
+
+                Vaccine vaccine = null;
+                for (Vaccine a :vaccines){
+                    if (a.getId() == obj.getId()){
+                        vaccine = a;
+                        break;
+                    }
                 }
             }
 

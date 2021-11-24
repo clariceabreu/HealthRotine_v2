@@ -159,7 +159,7 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 HashSet<String> componentsToShow = new HashSet<>(Arrays.asList(
                         "editTextSpecialist",
-                        "textViewSpecialy",
+                        "textViewSpecialty",
                         "spinnerSpecialty"
                 ));
                 HashSet<String> componentsToHide = new HashSet<>(Arrays.asList("spinnerSpecialist"));
@@ -184,6 +184,7 @@ public class AddActivity extends AppCompatActivity {
 
                         goToMainPage();
                     } catch (Exception e) {
+                        e.printStackTrace();
                         Snackbar.make(view, "Erro ao adicionar consulta", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
@@ -196,6 +197,7 @@ public class AddActivity extends AppCompatActivity {
 
                         goToMainPage();
                     } catch (Exception e) {
+                        e.printStackTrace();
                         Snackbar.make(view, "Erro ao adicionar consulta", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICALAPPOINTMENT;
 import static com.fsi.healthrotine.DataBase.Columns.TB_MEDICINE;
 import static com.fsi.healthrotine.DataBase.Columns.TB_SPECIALIST;
 
@@ -21,7 +22,7 @@ public  class MedicalAppointmentHelper {
                 "textViewSpecialist",
                 "spinnerSpecialist",
                 "buttonSpecialist",
-                "textViewSpecialy",
+                "textViewSpecialty",
                 "spinnerSpecialty",
                 "textViewDate",
                 "spinnerDay",
@@ -73,6 +74,6 @@ public  class MedicalAppointmentHelper {
 
         medicalAppointment.setComments(components.getComponentText("editTextComment"));
 
-        db.insertOnTable(TB_MEDICINE, medicalAppointment.getValues());
+        db.insertOnTable(TB_MEDICALAPPOINTMENT, medicalAppointment.getValues());
     }
 }

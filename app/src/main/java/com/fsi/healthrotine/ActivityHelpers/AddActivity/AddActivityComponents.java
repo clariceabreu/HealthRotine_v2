@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import androidx.appcompat.widget.AppCompatTextView;
 import com.fsi.healthrotine.R;
 
 import java.util.Calendar;

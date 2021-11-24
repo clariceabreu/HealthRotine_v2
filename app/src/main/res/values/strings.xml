@@ -3,10 +3,23 @@
     <string name="title_historic">Histórico</string>
     <string name="title_rotine">Rotina</string>
     <string name="title_future">Futuro</string>
+    <string name="title_patient">Patient</string>
     <string-array name="type">
         <item>Consulta</item>
         <item>Exame</item>
         <item>Remédio</item>
+    </string-array>
+    <string-array name="choice_items">
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>H/H</item>
+        <item>Desconhecido</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

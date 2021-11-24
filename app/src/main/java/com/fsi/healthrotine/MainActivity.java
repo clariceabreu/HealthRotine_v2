@@ -6,10 +6,45 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
+import com.fsi.healthrotine.DataBase.DataBase;
+import com.fsi.healthrotine.Models.MedicalAppointment;
+import com.fsi.healthrotine.Models.Patient;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.text.CollationElementIterator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import android.widget.Toast;
 
 
@@ -40,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private HistoricFragment historicFragment;
     private RotineFragment rotineFragment;
     private FutureFragment futureFragment;
+    private ProfileFragment profileFragment;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,20 +111,26 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*FloatingActionButton fab = findViewById(R.id.fab);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        FloatingActionButton fab = findViewById(R.id.profileButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToAddPage();
+                goToPatientPage();
             }
-        });*/
+        });
+
 
         historicFragment = new HistoricFragment();
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
+        profileFragment = new ProfileFragment();
 
-        setFragment(rotineFragment); //default fragment
+        setFragment(profileFragment); //default fragment
     }
+
 
     public void goToAddPage(){
         Intent intent = new Intent(this, AddActivity.class);
@@ -100,6 +143,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    private void goToPatientPage(){
+        Intent intent = new Intent(this, ProfileFragment.class);
+        startActivity(intent);
+    }
+
+    /*public static void exitApp(View view){
+        Button btnExit = view.findViewById(R.id.btnExit);
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
+    }*/
     // Read/Write permission
     private void requestForStoragePermission() {
         Dexter.withContext(this)
@@ -157,5 +215,4 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
-
 }

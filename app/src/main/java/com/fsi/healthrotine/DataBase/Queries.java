@@ -50,6 +50,7 @@ public class Queries {
             + ALLERGIES + " TEXT, "
             + SUS_CARD + " TEXT, "
             + HEALTH_INSURANCE + " TEXT, "
+            + EMAIL + " TEXT, "
             + EMERGENCY_CONTACTS + " TEXT)";
 
     public static final String VACCINE_QUERY = "CREATE TABLE " + TB_VACCINE + "("

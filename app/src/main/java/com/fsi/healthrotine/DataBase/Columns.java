@@ -34,6 +34,8 @@ public class Columns {
     public static final String MANUFACTURER = "manufacturer";
     public static final String BATCH = "batch";
     public static final String PLACE = "place";
+    public static final String EMAIL = "email";
     public static final String START_DATE = "startDate";
     public static final String FILE_LOCATION = "fileLocation";
+
 }

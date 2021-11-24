@@ -40,8 +40,8 @@
             android:text="FILTRAR"
             android:textColor="@android:color/white"
             android:background="@color/colorPrimaryDark"
-            android:layout_margin="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="50dp"/>
+            android:layout_margin="10dp"/>
         </LinearLayout>
 
 

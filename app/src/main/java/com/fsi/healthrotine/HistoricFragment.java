@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import com.fsi.healthrotine.DataBase.DataBase;
 import com.fsi.healthrotine.Models.CardObject;
@@ -72,6 +73,7 @@ public class HistoricFragment extends Fragment {
                 goToAddPage();
             }
         });
+
 
         layout = (LinearLayout) view.findViewById(R.id.layout);
         layout.setPadding(80,80,80,80);

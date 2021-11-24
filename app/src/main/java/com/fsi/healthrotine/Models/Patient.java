@@ -1,10 +1,21 @@
 package com.fsi.healthrotine.Models;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 import static com.fsi.healthrotine.DataBase.Columns.*;
+
+import com.fsi.healthrotine.DataBase.DataBase;
+import com.fsi.healthrotine.R;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -13,9 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Patient extends Entity{
+public class Patient extends Entity {
 
-    private String name;
     private int age;
     private String blood_type;
     private int weight;
@@ -23,13 +33,18 @@ public class Patient extends Entity{
     private String allergies;
     private int sus_card;
     private int health_insurance_card;
+    private String email;
     private String emergency_contacts;
+
+    private DataBase db;
+    private Context context;
+    private LinearLayout layout;
 
 
     public Patient(){}
 
     //constructor to update
-    public Patient(int _id, String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _emergency_contacts){
+    public Patient(int _id, String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _email, String _emergency_contacts){
         this.id = _id;
         this.age = _age;
         this.blood_type = _blood_type;
@@ -38,10 +53,11 @@ public class Patient extends Entity{
         this.allergies = _allergies;
         this.sus_card = _sus_card;
         this.health_insurance_card = _health_insurance_card;
+        this.email = _email;
         this.emergency_contacts = _emergency_contacts;
     }
 
-    public Patient(String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _emergency_contacts){
+    public Patient(String _name, int _age, String _blood_type, int _weight, int _height, String _allergies, int _sus_card, int _health_insurance_card, String _email, String _emergency_contacts){
         this.age = _age;
         this.blood_type = _blood_type;
         this.weight = _weight;
@@ -49,6 +65,7 @@ public class Patient extends Entity{
         this.allergies = _allergies;
         this.sus_card = _sus_card;
         this.health_insurance_card = _health_insurance_card;
+        this.email = _email;
         this.emergency_contacts = _emergency_contacts;
     }
 
@@ -107,6 +124,14 @@ public class Patient extends Entity{
     public void setHealth_insurance_card(int health_insurance_card) {
         this.health_insurance_card = health_insurance_card; }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getEmergency_contacts() {
         return emergency_contacts;
     }
@@ -127,6 +152,7 @@ public class Patient extends Entity{
         values.put(ALLERGIES, getAllergies());
         values.put(SUS_CARD, getSus_card());
         values.put(HEALTH_INSURANCE, getHealth_insurance_card());
+        values.put(EMAIL, getEmail());
         values.put(EMERGENCY_CONTACTS, getEmergency_contacts());
         return values;
     }
@@ -147,7 +173,8 @@ public class Patient extends Entity{
                     patient.setAllergies(cursor.getString(6));
                     patient.setSus_card(Integer.parseInt(cursor.getString(7)));
                     patient.setHealth_insurance_card(Integer.parseInt(cursor.getString(8)));
-                    patient.setEmergency_contacts((cursor.getString(9)));
+                    patient.setEmail(cursor.getString(9));
+                    patient.setEmergency_contacts((cursor.getString(10)));
             } while (cursor.moveToNext());
         }
 

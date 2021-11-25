@@ -6,46 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.provider.Settings;
-import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.fsi.healthrotine.DataBase.DataBase;
-import com.fsi.healthrotine.Models.MedicalAppointment;
-import com.fsi.healthrotine.Models.Patient;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.text.CollationElementIterator;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -54,9 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.fsi.healthrotine.DataBase.DataBase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -109,26 +77,41 @@ public class MainActivity extends AppCompatActivity {
         requestForStoragePermission();
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        FloatingActionButton fab = findViewById(R.id.profileButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        ImageButton imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                goToPatientPage();
+            public void onClick(View view){
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+
             }
         });
+        toolbarTitle.setText("");
+        ImageButton profileBtn = findViewById(R.id.profileButton);
 
+
+        ImageButton exportBtn = findViewById(R.id.settings);
+        exportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(context, ExportActivity.class);
+                startActivity(intent);
+            }
+        });
 
         historicFragment = new HistoricFragment();
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
         profileFragment = new ProfileFragment();
-
-        setFragment(profileFragment); //default fragment
+        setFragment(rotineFragment); //default fragment
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                System.out.println("oi");
+                setFragment(profileFragment);
+            }
+        });
     }
 
 
@@ -143,10 +126,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void goToPatientPage(){
-        Intent intent = new Intent(this, ProfileFragment.class);
-        startActivity(intent);
-    }
+
 
     /*public static void exitApp(View view){
         Button btnExit = view.findViewById(R.id.btnExit);

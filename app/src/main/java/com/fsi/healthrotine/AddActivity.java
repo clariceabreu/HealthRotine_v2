@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,23 @@ public class AddActivity extends AppCompatActivity {
         for (int i = 0; i < specialists.size(); i++) {
             specialistsNamesArray[i + 1] = specialists.get(i).getName();
         }
+        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        ImageButton imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        toolbarTitle.setText("");
+        ImageButton fab = findViewById(R.id.profileButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToProfilePage();
+            }
+        });
 
         final AddActivityComponents components = new AddActivityComponents(this);
         components.buildComponents(specialistsNamesArray);
@@ -236,6 +254,11 @@ public class AddActivity extends AppCompatActivity {
                 upload(view);
             }
         });
+    }
+
+    private void goToProfilePage(){
+        Intent intent = new Intent(this, ProfileFragment.class);
+        startActivity(intent);
     }
 
     public void goToMainPage(){

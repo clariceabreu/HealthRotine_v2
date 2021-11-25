@@ -19,6 +19,9 @@
             android:name=".AddActivity"/>
 
         <activity
+            android:name=".ExportActivity"/>
+
+        <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
             android:launchMode="singleTop">

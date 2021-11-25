@@ -65,7 +65,6 @@ public class RotineFragment extends Fragment {
                 goToAddPage();
             }
         });
-
         List<CardObject> cardObjects = new ArrayList<CardObject>();
 
         Calendar today  = Calendar.getInstance();

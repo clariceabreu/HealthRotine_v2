@@ -1,50 +1,26 @@
 package com.fsi.healthrotine;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.text.Html;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.fsi.healthrotine.DataBase.DataBase;
-import com.fsi.healthrotine.Models.Patient;
-
-import org.w3c.dom.Text;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-
-import static com.fsi.healthrotine.DataBase.Columns.*;
-
-import com.fsi.healthrotine.DataBase.DataBase;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileFragment extends Fragment {
     private DataBase db;
@@ -83,7 +59,9 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        TextView toolbarTitle = view.findViewById(R.id.toolbarTitle);
 
+        toolbarTitle.setText("Perfil");
         btnNome = view.findViewById(R.id.btnNome);
         final EditText nomeImput = new EditText(context);
         setEditText(view, btnNome, nomeImput);
@@ -127,20 +105,24 @@ public class ProfileFragment extends Fragment {
     };
 
 
+    private void goToProfilePage(){
+        Intent intent = new Intent(getContext(), ProfileFragment.class);
+        startActivity(intent);
+    }
 
     public void setTipo_Sanguineo(View view){
         Button btnSelectChoice = (Button) view.findViewById(R.id.btnSelectChoice);
         btnSelectChoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                DialogFragment singleChoiceDialog = new SingleChoiceDialogFragment();
+                DialogFragment singleChoiceDialog = new DialogFragment();
                 singleChoiceDialog.setCancelable(false);
                 singleChoiceDialog.show(getActivity().getSupportFragmentManager(), "Tipo Sanguíneo");
             }
         });
     }
 
-    public void setEditText(View view, Button btn, EditText imput){
+    public void setEditText(View view, final Button btn, final EditText imput){
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

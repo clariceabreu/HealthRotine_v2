@@ -71,7 +71,9 @@ public class ExamHelpers {
         exam.setDate(new Date(year - 1900, month - 1, day, hour, minutes));
         exam.setComments(components.getComponentText("editTextComment"));
         exam.setType(components.getComponentText("editTextType"));
-        exam.setFileLocation(components.getComponentText("textViewUploaded"));
+        String[] pathSplit = components.getTextViewText("textViewUploaded").split("/");
+        String fileLocation = pathSplit[pathSplit.length - 1];
+        exam.setFileLocation(fileLocation);
         db.insertOnTable(TB_EXAM, exam.getValues());
     }
 }

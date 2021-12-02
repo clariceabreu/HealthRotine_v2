@@ -11,7 +11,7 @@ import static com.fsi.healthrotine.DataBase.Columns.*;
 import static com.fsi.healthrotine.DataBase.Queries.*;
 
 public class DataBase extends SQLiteOpenHelper {
-    private static final int VERSION = 10;
+    private static final int VERSION = 11;
     private static final String DBNAME = "db_HealthRotine";
 
     public DataBase(Context context) {
@@ -31,10 +31,8 @@ public class DataBase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            db.execSQL(DROP1);
-            db.execSQL(DROP4);
-            db.execSQL(SPECIALIST_QUERY);
-            db.execSQL(MEDICALAPPOINTMENT_QUERY);
+            db.execSQL(DROP3);
+            db.execSQL(EXAM_QUERY);
 
         }
     }
@@ -65,5 +63,10 @@ public class DataBase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(table, values, ID + " = ? ", new String[]{String.valueOf(id)});
         db.close();
+    }
+    public Cursor getExamsFilePaths(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT "+ FILE_LOCATION +  " FROM " + TB_EXAM, null);
+        return cursor;
     }
 }

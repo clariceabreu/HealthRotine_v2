@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +67,26 @@ public class RotineFragment extends Fragment {
                 goToAddPage();
             }
         });
+
+        FloatingActionButton profileBtn = view.findViewById(R.id.buttonProfile);
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, new ProfileFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        FloatingActionButton exportBtn = view.findViewById(R.id.buttonExport);
+        exportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(context, ExportActivity.class);
+                startActivity(intent);
+            }
+        });
+
         List<CardObject> cardObjects = new ArrayList<CardObject>();
 
         Calendar today  = Calendar.getInstance();

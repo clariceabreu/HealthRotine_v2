@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import com.fsi.healthrotine.R;
 
@@ -266,6 +268,10 @@ public class AddActivityComponents {
 
     public String getComponentText(String component) {
         EditText editText = (EditText) componentsNames.get(component);
+        return editText.getText().toString();
+    }
+    public String getTextViewText(String component) {
+        TextView editText = (TextView) componentsNames.get(component);
         return editText.getText().toString();
     }
 

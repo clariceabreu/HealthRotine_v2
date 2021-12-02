@@ -1,5 +1,7 @@
 package com.fsi.healthrotine;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.fsi.healthrotine.ActivityHelpers.AddActivity.AddActivityComponents;
@@ -64,6 +67,7 @@ public class AddActivity extends AppCompatActivity {
             specialistsNamesArray[i + 1] = specialists.get(i).getName();
         }
         TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        toolbarTitle.setText("");
         ImageButton imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +77,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
         toolbarTitle.setText("");
-        ImageButton fab = findViewById(R.id.profileButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToProfilePage();
-            }
-        });
-
         final AddActivityComponents components = new AddActivityComponents(this);
         components.buildComponents(specialistsNamesArray);
         components.hideAllComponents();
@@ -298,7 +294,7 @@ public class AddActivity extends AppCompatActivity {
                     FileInputStream fileIn=new FileInputStream (new File(selectedFilePath));
                     outputWriter.write(String.valueOf(fileIn));
                     outputWriter.close();
-                    textViewUploaded.setText(pathSplit[pathSplit.length - 1]);
+                    textViewUploaded.setText(selectedFilePath);
                     //display file saved message
                     Toast.makeText(getBaseContext(), "Arquivo carregado com sucesso!",
                             Toast.LENGTH_SHORT).show();

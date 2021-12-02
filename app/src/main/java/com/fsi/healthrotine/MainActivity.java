@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        toolbarTitle.setText("");
         ImageButton imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,36 +89,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         toolbarTitle.setText("");
-        ImageButton profileBtn = findViewById(R.id.profileButton);
-
-
-        ImageButton exportBtn = findViewById(R.id.settings);
-        exportBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(context, ExportActivity.class);
-                startActivity(intent);
-            }
-        });
 
         historicFragment = new HistoricFragment();
         rotineFragment = new RotineFragment();
         futureFragment = new FutureFragment();
         profileFragment = new ProfileFragment();
         setFragment(rotineFragment); //default fragment
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                System.out.println("oi");
-                setFragment(profileFragment);
-            }
-        });
-    }
-
-
-    public void goToAddPage(){
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
     }
 
     private void setFragment(Fragment fragment){
@@ -126,19 +103,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
-
-    /*public static void exitApp(View view){
-        Button btnExit = view.findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                System.exit(0);
-            }
-        });
-    }*/
-    // Read/Write permission
     private void requestForStoragePermission() {
         Dexter.withContext(this)
                 .withPermissions(

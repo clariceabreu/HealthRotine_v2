@@ -66,17 +66,6 @@ public class AddActivity extends AppCompatActivity {
         for (int i = 0; i < specialists.size(); i++) {
             specialistsNamesArray[i + 1] = specialists.get(i).getName();
         }
-        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
-        toolbarTitle.setText("");
-        ImageButton imgBack = findViewById(R.id.imgBack);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        toolbarTitle.setText("");
         final AddActivityComponents components = new AddActivityComponents(this);
         components.buildComponents(specialistsNamesArray);
         components.hideAllComponents();

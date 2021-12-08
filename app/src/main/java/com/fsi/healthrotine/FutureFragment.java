@@ -65,13 +65,6 @@ public class FutureFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_future, container, false);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToAddPage();
-            }
-        });
         FloatingActionButton profileBtn = view.findViewById(R.id.buttonProfile);
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override

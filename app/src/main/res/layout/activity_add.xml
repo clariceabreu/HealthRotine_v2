@@ -13,8 +13,6 @@
         android:padding="30dp"
         tools:visibility="invisible">
 
-        <include layout="@layout/toolbar"/>
-
         <Spinner
             android:id="@+id/spinnerType"
             android:layout_width="match_parent"
